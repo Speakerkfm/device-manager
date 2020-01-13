@@ -1,0 +1,7 @@
+.idea
+.DS_Store
+.env
+.testCoverage.txt
+/tests/node_modules
+/tmp/*
+!/tmp/swagger.yaml
