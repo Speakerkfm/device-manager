@@ -20,6 +20,7 @@ import (
 	"github.com/go-openapi/swag"
 
 	"device-manager/pkg/restapi/operations/devices"
+	"device-manager/pkg/restapi/operations/users"
 )
 
 // NewDeviceManagerAPI creates a new DeviceManager instance
@@ -47,6 +48,9 @@ func NewDeviceManagerAPI(spec *loads.Document) *DeviceManagerAPI {
 		}),
 		DevicesDevicesListHandler: devices.DevicesListHandlerFunc(func(params devices.DevicesListParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation DevicesDevicesList has not yet been implemented")
+		}),
+		UsersUserRegistrationHandler: users.UserRegistrationHandlerFunc(func(params users.UserRegistrationParams) middleware.Responder {
+			return middleware.NotImplemented("operation UsersUserRegistration has not yet been implemented")
 		}),
 	}
 }
@@ -85,6 +89,8 @@ type DeviceManagerAPI struct {
 	DevicesDeviceStatsHandler devices.DeviceStatsHandler
 	// DevicesDevicesListHandler sets the operation handler for the devices list operation
 	DevicesDevicesListHandler devices.DevicesListHandler
+	// UsersUserRegistrationHandler sets the operation handler for the user registration operation
+	UsersUserRegistrationHandler users.UserRegistrationHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -158,6 +164,10 @@ func (o *DeviceManagerAPI) Validate() error {
 
 	if o.DevicesDevicesListHandler == nil {
 		unregistered = append(unregistered, "devices.DevicesListHandler")
+	}
+
+	if o.UsersUserRegistrationHandler == nil {
+		unregistered = append(unregistered, "users.UserRegistrationHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -272,6 +282,11 @@ func (o *DeviceManagerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/devices"] = devices.NewDevicesList(o.context, o.DevicesDevicesListHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/users"] = users.NewUserRegistration(o.context, o.UsersUserRegistrationHandler)
 
 }
 

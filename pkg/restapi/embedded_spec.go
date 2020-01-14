@@ -227,29 +227,70 @@ func init() {
       }
     },
     "/users": {
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "description": "Информация о пользователе",
-            "type": "object",
-            "required": [
-              "email"
-            ],
-            "properties": {
-              "email": {
-                "type": "string",
-                "x-isnullable": false
+      "post": {
+        "description": "Регистрации нового пользователя",
+        "tags": [
+          "users"
+        ],
+        "operationId": "user_registration",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "description": "Информация о пользователе",
+              "type": "object",
+              "required": [
+                "email"
+              ],
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "x-isnullable": false
+                }
+              },
+              "example": {
+                "email": "test@example.com"
               }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [
+                "token"
+              ],
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "x-isnullable": false
+                }
+              },
+              "example": {
+                "token": "JWT"
+              }
+            }
+          },
+          "422": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
             },
-            "example": {
-              "email": "test@example.com"
+            "examples": {
+              "application/json": {
+                "error": {
+                  "code": "000-000",
+                  "description": "description"
+                }
+              }
             }
           }
         }
-      ]
+      }
     }
   },
   "definitions": {
@@ -495,29 +536,70 @@ func init() {
       }
     },
     "/users": {
-      "parameters": [
-        {
-          "name": "body",
-          "in": "body",
-          "required": true,
-          "schema": {
-            "description": "Информация о пользователе",
-            "type": "object",
-            "required": [
-              "email"
-            ],
-            "properties": {
-              "email": {
-                "type": "string",
-                "x-isnullable": false
+      "post": {
+        "description": "Регистрации нового пользователя",
+        "tags": [
+          "users"
+        ],
+        "operationId": "user_registration",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "description": "Информация о пользователе",
+              "type": "object",
+              "required": [
+                "email"
+              ],
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "x-isnullable": false
+                }
+              },
+              "example": {
+                "email": "test@example.com"
               }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "required": [
+                "token"
+              ],
+              "properties": {
+                "token": {
+                  "type": "string",
+                  "x-isnullable": false
+                }
+              },
+              "example": {
+                "token": "JWT"
+              }
+            }
+          },
+          "422": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
             },
-            "example": {
-              "email": "test@example.com"
+            "examples": {
+              "application/json": {
+                "error": {
+                  "code": "000-000",
+                  "description": "description"
+                }
+              }
             }
           }
         }
-      ]
+      }
     }
   },
   "definitions": {

@@ -2,5 +2,10 @@
 
 package store
 
+import (
+	"device-manager/pkg/models"
+)
+
 type StoreInterface interface {
+	NewUser(email string) (*models.User, error)
 }

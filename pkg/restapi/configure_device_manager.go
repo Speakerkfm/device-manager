@@ -12,6 +12,7 @@ import (
 
 	"device-manager/pkg/restapi/operations"
 	"device-manager/pkg/restapi/operations/devices"
+	"device-manager/pkg/restapi/operations/users"
 )
 
 //go:generate swagger generate server --target ../../pkg --name DeviceManager --spec ../../tmp/swagger.yaml --tags users --tags devices --exclude-main
@@ -42,6 +43,9 @@ func configureAPI(api *operations.DeviceManagerAPI) http.Handler {
 	})
 	api.DevicesDevicesListHandler = devices.DevicesListHandlerFunc(func(params devices.DevicesListParams, principal interface{}) middleware.Responder {
 		return middleware.NotImplemented("operation devices.DevicesList has not yet been implemented")
+	})
+	api.UsersUserRegistrationHandler = users.UserRegistrationHandlerFunc(func(params users.UserRegistrationParams) middleware.Responder {
+		return middleware.NotImplemented("operation users.UserRegistration has not yet been implemented")
 	})
 
 	api.ServerShutdown = func() {}

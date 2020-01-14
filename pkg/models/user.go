@@ -3,6 +3,6 @@ package models
 import "github.com/satori/go.uuid"
 
 type User struct {
-	ID    uuid.UUID
-	Email string
+	ID    uuid.UUID `json:"id"`
+	Email string `json:"email"`
 }
