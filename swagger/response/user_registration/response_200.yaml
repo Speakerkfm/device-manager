@@ -1,0 +1,11 @@
+description: "OK"
+schema:
+  type: object
+  properties:
+    token:
+      type: string
+      x-isnullable: false
+  required:
+  - token
+  example:
+    token: JWT

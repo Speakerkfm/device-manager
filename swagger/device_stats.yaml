@@ -1,0 +1,14 @@
+get:
+  tags:
+  - devices
+  description: Получение списка устройств пользователя
+  operationId: device_stats
+  security:
+  - bearerAuth: []
+  responses:
+    200:
+      $ref: './response/device_stats/response_200.yaml'
+    422:
+      $ref: './response/response_422.yaml'
+  parameters:
+  - $ref: './parameter/device_id.yaml'

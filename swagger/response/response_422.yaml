@@ -1,11 +1,8 @@
-description: "OK"
-  schema:
-    type: object
-    properties:
-      email:
-        type: string
-        x-isnullable: false
-      required:
-      - email
-      example:
-        email: test@example.com
+description: Error
+schema:
+  $ref: '../def/error_result.yaml#/ErrorResult'
+examples:
+  application/json:
+    error:
+      code: 000-000
+      description: description

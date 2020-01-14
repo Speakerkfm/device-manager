@@ -16,7 +16,7 @@ ErrorResult:
           x-isnullable: false
           example: Object not found
       required:
-        - code
-        - description
+      - code
+      - description
   required:
-    - error
+  - error

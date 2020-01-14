@@ -19,7 +19,7 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"device-manager/pkg/restapi/operations/user"
+	"device-manager/pkg/restapi/operations/devices"
 )
 
 // NewDeviceManagerAPI creates a new DeviceManager instance
@@ -39,8 +39,14 @@ func NewDeviceManagerAPI(spec *loads.Document) *DeviceManagerAPI {
 		BearerAuthenticator: security.BearerAuth,
 		JSONConsumer:        runtime.JSONConsumer(),
 		JSONProducer:        runtime.JSONProducer(),
-		UserUserRegistrationHandler: user.UserRegistrationHandlerFunc(func(params user.UserRegistrationParams) middleware.Responder {
-			return middleware.NotImplemented("operation UserUserRegistration has not yet been implemented")
+		DevicesDeviceRegistrationHandler: devices.DeviceRegistrationHandlerFunc(func(params devices.DeviceRegistrationParams) middleware.Responder {
+			return middleware.NotImplemented("operation DevicesDeviceRegistration has not yet been implemented")
+		}),
+		DevicesDeviceStatsHandler: devices.DeviceStatsHandlerFunc(func(params devices.DeviceStatsParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation DevicesDeviceStats has not yet been implemented")
+		}),
+		DevicesDevicesListHandler: devices.DevicesListHandlerFunc(func(params devices.DevicesListParams, principal interface{}) middleware.Responder {
+			return middleware.NotImplemented("operation DevicesDevicesList has not yet been implemented")
 		}),
 	}
 }
@@ -73,8 +79,12 @@ type DeviceManagerAPI struct {
 	// JSONProducer registers a producer for a "application/json" mime type
 	JSONProducer runtime.Producer
 
-	// UserUserRegistrationHandler sets the operation handler for the user registration operation
-	UserUserRegistrationHandler user.UserRegistrationHandler
+	// DevicesDeviceRegistrationHandler sets the operation handler for the device registration operation
+	DevicesDeviceRegistrationHandler devices.DeviceRegistrationHandler
+	// DevicesDeviceStatsHandler sets the operation handler for the device stats operation
+	DevicesDeviceStatsHandler devices.DeviceStatsHandler
+	// DevicesDevicesListHandler sets the operation handler for the devices list operation
+	DevicesDevicesListHandler devices.DevicesListHandler
 
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
@@ -138,8 +148,16 @@ func (o *DeviceManagerAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.UserUserRegistrationHandler == nil {
-		unregistered = append(unregistered, "user.UserRegistrationHandler")
+	if o.DevicesDeviceRegistrationHandler == nil {
+		unregistered = append(unregistered, "devices.DeviceRegistrationHandler")
+	}
+
+	if o.DevicesDeviceStatsHandler == nil {
+		unregistered = append(unregistered, "devices.DeviceStatsHandler")
+	}
+
+	if o.DevicesDevicesListHandler == nil {
+		unregistered = append(unregistered, "devices.DevicesListHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -243,7 +261,17 @@ func (o *DeviceManagerAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/user"] = user.NewUserRegistration(o.context, o.UserUserRegistrationHandler)
+	o.handlers["POST"]["/devices"] = devices.NewDeviceRegistration(o.context, o.DevicesDeviceRegistrationHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/devices/{device_id}/stats"] = devices.NewDeviceStats(o.context, o.DevicesDeviceStatsHandler)
+
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/devices"] = devices.NewDevicesList(o.context, o.DevicesDevicesListHandler)
 
 }
 

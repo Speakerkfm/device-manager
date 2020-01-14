@@ -1,0 +1,6 @@
+name: device_id
+description: идентификатор устройства
+in: path
+type: string
+format: uuid
+required: true

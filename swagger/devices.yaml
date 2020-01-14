@@ -1,0 +1,25 @@
+post:
+  tags:
+  - devices
+  description: Регистрации нового устройства
+  operationId: device_registration
+  responses:
+    200:
+      $ref: './response/device_registration/response_200.yaml'
+    422:
+      $ref: './response/response_422.yaml'
+  parameters:
+  - $ref: './parameter/device_registration_body.yaml'
+get:
+  tags:
+  - devices
+  description: Получение списка устройств пользователя
+  operationId: devices_list
+  security:
+  - bearerAuth: []
+  responses:
+    200:
+      $ref: './response/devices_list/response_200.yaml'
+    422:
+      $ref: './response/response_422.yaml'
+  parameters:

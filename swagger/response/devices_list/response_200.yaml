@@ -1,0 +1,26 @@
+description: "OK"
+schema:
+  type: array
+  items:
+    type: object
+    properties:
+      device_name:
+        type: string
+        x-isnullable: false
+      device_id:
+        type: string
+        format: uuid
+        x-isnullable: false
+      last_meter_readings_time:
+        type: string
+        x-isnullable: true
+    required:
+    - device_name
+    - device_id
+  example:
+    [
+    {
+      device_name: my_device,
+      device_id: 017d4ff8-e2c8-42f2-89f3-7822eeca3ebe
+    }
+    ]

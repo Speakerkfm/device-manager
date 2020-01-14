@@ -11,10 +11,10 @@ import (
 	middleware "github.com/go-openapi/runtime/middleware"
 
 	"device-manager/pkg/restapi/operations"
-	"device-manager/pkg/restapi/operations/user"
+	"device-manager/pkg/restapi/operations/devices"
 )
 
-//go:generate swagger generate server --target ../../pkg --name DeviceManager --spec ../../tmp/swagger.yaml --tags user --exclude-main
+//go:generate swagger generate server --target ../../pkg --name DeviceManager --spec ../../tmp/swagger.yaml --tags users --tags devices --exclude-main
 
 func configureFlags(api *operations.DeviceManagerAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -34,8 +34,14 @@ func configureAPI(api *operations.DeviceManagerAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.UserUserRegistrationHandler = user.UserRegistrationHandlerFunc(func(params user.UserRegistrationParams) middleware.Responder {
-		return middleware.NotImplemented("operation user.UserRegistration has not yet been implemented")
+	api.DevicesDeviceRegistrationHandler = devices.DeviceRegistrationHandlerFunc(func(params devices.DeviceRegistrationParams) middleware.Responder {
+		return middleware.NotImplemented("operation devices.DeviceRegistration has not yet been implemented")
+	})
+	api.DevicesDeviceStatsHandler = devices.DeviceStatsHandlerFunc(func(params devices.DeviceStatsParams, principal interface{}) middleware.Responder {
+		return middleware.NotImplemented("operation devices.DeviceStats has not yet been implemented")
+	})
+	api.DevicesDevicesListHandler = devices.DevicesListHandlerFunc(func(params devices.DevicesListParams, principal interface{}) middleware.Responder {
+		return middleware.NotImplemented("operation devices.DevicesList has not yet been implemented")
 	})
 
 	api.ServerShutdown = func() {}
