@@ -8,6 +8,8 @@ get:
   responses:
     200:
       $ref: './response/device_stats/response_200.yaml'
+    401:
+      $ref: './response/response_401.yaml'
     422:
       $ref: './response/response_422.yaml'
   parameters:

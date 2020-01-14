@@ -81,6 +81,12 @@ func init() {
               ]
             }
           },
+          "401": {
+            "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
           "422": {
             "description": "Error",
             "schema": {
@@ -195,6 +201,12 @@ func init() {
             "description": "OK",
             "schema": {
               "type": "object"
+            }
+          },
+          "401": {
+            "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
             }
           },
           "422": {
@@ -337,6 +349,12 @@ func init() {
               ]
             }
           },
+          "401": {
+            "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
           "422": {
             "description": "Error",
             "schema": {
@@ -451,6 +469,12 @@ func init() {
             "description": "OK",
             "schema": {
               "type": "object"
+            }
+          },
+          "401": {
+            "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
             }
           },
           "422": {

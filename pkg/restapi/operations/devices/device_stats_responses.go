@@ -56,6 +56,50 @@ func (o *DeviceStatsOK) WriteResponse(rw http.ResponseWriter, producer runtime.P
 
 }
 
+// DeviceStatsUnauthorizedCode is the HTTP code returned for type DeviceStatsUnauthorized
+const DeviceStatsUnauthorizedCode int = 401
+
+/*DeviceStatsUnauthorized Пользователь не аутентифицирован в системе
+
+swagger:response deviceStatsUnauthorized
+*/
+type DeviceStatsUnauthorized struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.ErrorResult `json:"body,omitempty"`
+}
+
+// NewDeviceStatsUnauthorized creates DeviceStatsUnauthorized with default headers values
+func NewDeviceStatsUnauthorized() *DeviceStatsUnauthorized {
+
+	return &DeviceStatsUnauthorized{}
+}
+
+// WithPayload adds the payload to the device stats unauthorized response
+func (o *DeviceStatsUnauthorized) WithPayload(payload *models.ErrorResult) *DeviceStatsUnauthorized {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the device stats unauthorized response
+func (o *DeviceStatsUnauthorized) SetPayload(payload *models.ErrorResult) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *DeviceStatsUnauthorized) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(401)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // DeviceStatsUnprocessableEntityCode is the HTTP code returned for type DeviceStatsUnprocessableEntity
 const DeviceStatsUnprocessableEntityCode int = 422
 

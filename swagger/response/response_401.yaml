@@ -1,0 +1,8 @@
+description: Пользователь не аутентифицирован в системе
+schema:
+  $ref: '../def/error_result.yaml#/ErrorResult'
+example:
+  InactiveUserException:
+    error:
+      code: 002
+      description: Wrong access
