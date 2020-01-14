@@ -1,0 +1,11 @@
+tags:
+- users
+description: Регистрации нового пользователя
+operationId: user_registration
+responses:
+  200:
+    $ref: './response/user_registration/response_200.yaml'
+  422:
+    $ref: './response/response_422.yaml'
+parameters:
+- $ref: './parameter/user_registration_body.yaml'
