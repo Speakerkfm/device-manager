@@ -30,10 +30,11 @@ func configureAPI(api *operations.DeviceManagerAPI, redisClient *redis.Client, c
 	usersContext := users_handler.NewContext(userService)
 	api.UsersUserRegistrationHandler = users.UserRegistrationHandlerFunc(usersContext.Register)
 
-	deviceContext := devices_handler.NewContext(deviceService, st)
+	deviceContext := devices_handler.NewContext(deviceService)
 	api.DevicesDeviceRegistrationHandler = devices.DeviceRegistrationHandlerFunc(deviceContext.Register)
-
-	//api.DevicesDevicesListHandler = devices.DevicesListHandlerFunc()
+	api.DevicesDeviceListHandler = devices.DeviceListHandlerFunc(deviceContext.GetList)
+	api.DevicesDeviceStatsHandler = devices.DeviceStatsHandlerFunc(deviceContext.GetStats)
+	api.DevicesDeviceReadingsHandler = devices.DeviceReadingsHandlerFunc(deviceContext.SaveReadings)
 
 	return setupMiddleware(api.Serve(setupMiddleware))
 }

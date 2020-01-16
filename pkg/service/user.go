@@ -22,5 +22,5 @@ func (us *UserService) NewUser(email string) (string, error) {
 		return "", err
 	}
 
-	return us.jwt.CreateUserJWT(user)
+	return us.jwt.CreateJWT(user, typeUser)
 }

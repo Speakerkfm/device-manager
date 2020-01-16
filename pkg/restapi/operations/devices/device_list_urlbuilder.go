@@ -11,15 +11,15 @@ import (
 	golangswaggerpaths "path"
 )
 
-// DevicesListURL generates an URL for the devices list operation
-type DevicesListURL struct {
+// DeviceListURL generates an URL for the device list operation
+type DeviceListURL struct {
 	_basePath string
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *DevicesListURL) WithBasePath(bp string) *DevicesListURL {
+func (o *DeviceListURL) WithBasePath(bp string) *DeviceListURL {
 	o.SetBasePath(bp)
 	return o
 }
@@ -27,12 +27,12 @@ func (o *DevicesListURL) WithBasePath(bp string) *DevicesListURL {
 // SetBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *DevicesListURL) SetBasePath(bp string) {
+func (o *DeviceListURL) SetBasePath(bp string) {
 	o._basePath = bp
 }
 
 // Build a url path and query string
-func (o *DevicesListURL) Build() (*url.URL, error) {
+func (o *DeviceListURL) Build() (*url.URL, error) {
 	var _result url.URL
 
 	var _path = "/devices"
@@ -47,7 +47,7 @@ func (o *DevicesListURL) Build() (*url.URL, error) {
 }
 
 // Must is a helper function to panic when the url builder returns an error
-func (o *DevicesListURL) Must(u *url.URL, err error) *url.URL {
+func (o *DeviceListURL) Must(u *url.URL, err error) *url.URL {
 	if err != nil {
 		panic(err)
 	}
@@ -58,17 +58,17 @@ func (o *DevicesListURL) Must(u *url.URL, err error) *url.URL {
 }
 
 // String returns the string representation of the path with query string
-func (o *DevicesListURL) String() string {
+func (o *DeviceListURL) String() string {
 	return o.Must(o.Build()).String()
 }
 
 // BuildFull builds a full url with scheme, host, path and query string
-func (o *DevicesListURL) BuildFull(scheme, host string) (*url.URL, error) {
+func (o *DeviceListURL) BuildFull(scheme, host string) (*url.URL, error) {
 	if scheme == "" {
-		return nil, errors.New("scheme is required for a full url on DevicesListURL")
+		return nil, errors.New("scheme is required for a full url on DeviceListURL")
 	}
 	if host == "" {
-		return nil, errors.New("host is required for a full url on DevicesListURL")
+		return nil, errors.New("host is required for a full url on DeviceListURL")
 	}
 
 	base, err := o.Build()
@@ -82,6 +82,6 @@ func (o *DevicesListURL) BuildFull(scheme, host string) (*url.URL, error) {
 }
 
 // StringFull returns the string representation of a complete url
-func (o *DevicesListURL) StringFull(scheme, host string) string {
+func (o *DeviceListURL) StringFull(scheme, host string) string {
 	return o.Must(o.BuildFull(scheme, host)).String()
 }

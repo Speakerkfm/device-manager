@@ -16,7 +16,7 @@ import (
 // DeviceReadingsCreatedCode is the HTTP code returned for type DeviceReadingsCreated
 const DeviceReadingsCreatedCode int = 201
 
-/*DeviceReadingsCreated No content
+/*DeviceReadingsCreated Created
 
 swagger:response deviceReadingsCreated
 */

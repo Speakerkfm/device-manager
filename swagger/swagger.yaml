@@ -32,11 +32,12 @@ definitions:
   JWTKey:
     type: object
     properties:
-      user_id:
+      id:
         type: string
-        x-isnullable: true
-      device_id:
+        x-isnullable: false
+      email:
         type: string
         x-isnullable: true
       type:
         type: string
+        x-isnullable: false

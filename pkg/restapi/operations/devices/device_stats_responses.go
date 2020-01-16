@@ -100,6 +100,50 @@ func (o *DeviceStatsUnauthorized) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
+// DeviceStatsForbiddenCode is the HTTP code returned for type DeviceStatsForbidden
+const DeviceStatsForbiddenCode int = 403
+
+/*DeviceStatsForbidden Пользователь не имеет доступа к данному ресурсу
+
+swagger:response deviceStatsForbidden
+*/
+type DeviceStatsForbidden struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.ErrorResult `json:"body,omitempty"`
+}
+
+// NewDeviceStatsForbidden creates DeviceStatsForbidden with default headers values
+func NewDeviceStatsForbidden() *DeviceStatsForbidden {
+
+	return &DeviceStatsForbidden{}
+}
+
+// WithPayload adds the payload to the device stats forbidden response
+func (o *DeviceStatsForbidden) WithPayload(payload *models.ErrorResult) *DeviceStatsForbidden {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the device stats forbidden response
+func (o *DeviceStatsForbidden) SetPayload(payload *models.ErrorResult) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *DeviceStatsForbidden) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(403)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // DeviceStatsUnprocessableEntityCode is the HTTP code returned for type DeviceStatsUnprocessableEntity
 const DeviceStatsUnprocessableEntityCode int = 422
 

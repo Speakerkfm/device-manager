@@ -9,11 +9,9 @@ schema:
         x-isnullable: false
       device_id:
         type: string
-        format: uuid
         x-isnullable: false
       last_meter_readings_time:
         type: string
-        format: date-time
         x-isnullable: true
     required:
     - device_name

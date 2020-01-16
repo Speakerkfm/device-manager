@@ -7,5 +7,8 @@ import (
 )
 
 type DeviceService interface {
-	NewDevice(user *models.User, deviceName string) (string, error)
+	NewDevice(ownerEmail, deviceName string) (string, error)
+	GetUserDevices(userEmail string) ([]*models.Device, error)
+	GetDeviceStats(deviceID string) ([]*models.DeviceReadings, error)
+	SaveDeviceReadings(deviceID string, readingsTime string, temperature float64) error
 }

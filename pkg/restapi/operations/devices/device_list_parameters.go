@@ -12,18 +12,18 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 )
 
-// NewDevicesListParams creates a new DevicesListParams object
+// NewDeviceListParams creates a new DeviceListParams object
 // no default values defined in spec.
-func NewDevicesListParams() DevicesListParams {
+func NewDeviceListParams() DeviceListParams {
 
-	return DevicesListParams{}
+	return DeviceListParams{}
 }
 
-// DevicesListParams contains all the bound params for the devices list operation
+// DeviceListParams contains all the bound params for the device list operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters devices_list
-type DevicesListParams struct {
+// swagger:parameters device_list
+type DeviceListParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -32,8 +32,8 @@ type DevicesListParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewDevicesListParams() beforehand.
-func (o *DevicesListParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewDeviceListParams() beforehand.
+func (o *DeviceListParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r

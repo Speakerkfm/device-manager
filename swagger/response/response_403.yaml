@@ -1,0 +1,8 @@
+description: Пользователь не имеет доступа к данному ресурсу
+schema:
+  $ref: '../def/error_result.yaml#/ErrorResult'
+example:
+  InactiveUserException:
+    error:
+      code: 003
+      description: Permission denied

@@ -7,10 +7,10 @@ post:
   - Device: []
   responses:
     201:
-      description: 'No content'
+      description: Created
     401:
       $ref: './response/response_401.yaml'
     422:
       $ref: './response/response_422.yaml'
-  parameter:
-    $ref: './parameter/device_readings_body.yaml'
+  parameters:
+  - $ref: './parameter/device_readings_body.yaml'

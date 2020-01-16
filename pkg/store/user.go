@@ -24,7 +24,6 @@ func (st *Store) NewUser(email string) (*models.User, error) {
 
 	user.ID = uuid.NewV4().String()
 	user.Email = email
-	user.Secret = generateRandomString(32)
 
 	err := st.codec.Set(&cache.Item{
 		Key:        key,
@@ -41,8 +40,18 @@ func (st *Store) GetUserByEmail(email string) (*models.User, error) {
 	key := fmt.Sprintf(userKey, email)
 
 	if err := st.codec.Get(key, &user); err != nil {
-		return nil, programerrors.NewObjectNotFount("User not found")
+		return nil, programerrors.NewObjectNotFound("User not found")
 	}
 
 	return user, nil
+}
+
+func (st *Store) UpdateUser(user *models.User) error {
+	key := fmt.Sprintf(userKey, user.Email)
+
+	return st.codec.Set(&cache.Item{
+		Key:        key,
+		Object:     user,
+		Expiration: userTTL,
+	})
 }

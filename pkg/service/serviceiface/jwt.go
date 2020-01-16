@@ -4,11 +4,13 @@ package serviceiface
 
 import (
 	"device-manager/pkg/models"
+
+	"github.com/dgrijalva/jwt-go"
 )
 
 type JWT interface {
-	CreateUserJWT(user *models.User) (string, error)
-	CreateDeviceJWT(user *models.User, device *models.Device) (string, error)
+	CreateJWT(entity interface{}, entityType string) (string, error)
 	ValidateUserToken(token string) (*models.JWTKey, error)
 	ValidateDeviceToken(token string) (*models.JWTKey, error)
+	Parse(tokenString, jwtSecret string) (jwt.MapClaims, bool)
 }

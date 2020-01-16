@@ -16,7 +16,7 @@ get:
   tags:
   - devices
   description: Получение списка устройств пользователя
-  operationId: devices_list
+  operationId: device_list
   security:
   - User: []
   responses:

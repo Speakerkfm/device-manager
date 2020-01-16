@@ -15,14 +15,14 @@ import (
 // swagger:model JWTKey
 type JWTKey struct {
 
-	// device id
-	DeviceID *string `json:"device_id,omitempty"`
+	// email
+	Email *string `json:"email,omitempty"`
+
+	// id
+	ID string `json:"id,omitempty"`
 
 	// type
 	Type string `json:"type,omitempty"`
-
-	// user id
-	UserID *string `json:"user_id,omitempty"`
 }
 
 // Validate validates this j w t key

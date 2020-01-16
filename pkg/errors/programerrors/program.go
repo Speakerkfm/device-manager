@@ -12,14 +12,14 @@ func NewEmailTaken(msg string) EmailTaken {
 	return EmailTaken{msg: msg}
 }
 
-type ObjectNotFount struct {
+type ObjectNotFound struct {
 	msg string
 }
 
-func (e ObjectNotFount) Error() string {
+func (e ObjectNotFound) Error() string {
 	return e.msg
 }
 
-func NewObjectNotFount(msg string) ObjectNotFount {
-	return ObjectNotFount{msg: msg}
+func NewObjectNotFound(msg string) ObjectNotFound {
+	return ObjectNotFound{msg: msg}
 }

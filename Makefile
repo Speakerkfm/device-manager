@@ -1,4 +1,4 @@
-run:
+runn:
 	export `cat .env` && go run cmd/device-manager/*.go --port=8000
 
 flatten:
@@ -7,7 +7,7 @@ flatten:
 
 server: flatten
 	rm -r pkg/restapi/
-	swagger generate server -f tmp/swagger.yaml -P models.JWTUserKey -P models.JWTDeviceKey -t pkg --tags=users --tags=devices --exclude-main
+	swagger generate server -f tmp/swagger.yaml -P models.JWTKey -t pkg --tags=users --tags=devices --exclude-main
 
 doc: flatten
 	swagger serve -p 8095 -F swagger tmp/swagger.yaml

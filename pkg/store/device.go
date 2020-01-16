@@ -1,6 +1,7 @@
 package store
 
 import (
+	"device-manager/pkg/errors/programerrors"
 	"device-manager/pkg/models"
 	"fmt"
 	"github.com/go-redis/cache"
@@ -13,12 +14,11 @@ const (
 	deviceTTL = 24 * time.Hour
 )
 
-func (st *Store) NewDevice(user *models.User, deviceName, ownerEmail string) (*models.Device, error) {
+func (st *Store) NewDevice(userID, deviceName, ownerEmail string) (*models.Device, error) {
 	device := &models.Device{}
 
 	device.ID = uuid.NewV4().String()
 	device.Name = deviceName
-	device.OwnerID = user.ID
 
 	key := fmt.Sprintf(deviceKey, device.ID)
 
@@ -30,3 +30,15 @@ func (st *Store) NewDevice(user *models.User, deviceName, ownerEmail string) (*m
 
 	return device, err
 }
+
+func (st *Store) GetDeviceByID(deviceID string) (*models.Device, error) {
+	device := &models.Device{}
+	key := fmt.Sprintf(deviceKey, deviceID)
+
+	if err := st.codec.Get(key, &device); err != nil {
+		return nil, programerrors.NewObjectNotFound("Device not found")
+	}
+
+	return device, nil
+}
+

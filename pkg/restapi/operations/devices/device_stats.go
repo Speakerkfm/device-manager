@@ -14,16 +14,16 @@ import (
 )
 
 // DeviceStatsHandlerFunc turns a function with the right signature into a device stats handler
-type DeviceStatsHandlerFunc func(DeviceStatsParams, *models.JWTDeviceKey) middleware.Responder
+type DeviceStatsHandlerFunc func(DeviceStatsParams, *models.JWTKey) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn DeviceStatsHandlerFunc) Handle(params DeviceStatsParams, principal *models.JWTDeviceKey) middleware.Responder {
+func (fn DeviceStatsHandlerFunc) Handle(params DeviceStatsParams, principal *models.JWTKey) middleware.Responder {
 	return fn(params, principal)
 }
 
 // DeviceStatsHandler interface for that can handle valid device stats params
 type DeviceStatsHandler interface {
-	Handle(DeviceStatsParams, *models.JWTDeviceKey) middleware.Responder
+	Handle(DeviceStatsParams, *models.JWTKey) middleware.Responder
 }
 
 // NewDeviceStats creates a new http.Handler for the device stats operation
@@ -56,9 +56,9 @@ func (o *DeviceStats) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	if aCtx != nil {
 		r = aCtx
 	}
-	var principal *models.JWTDeviceKey
+	var principal *models.JWTKey
 	if uprinc != nil {
-		principal = uprinc.(*models.JWTDeviceKey) // this is really a models.JWTDeviceKey, I promise
+		principal = uprinc.(*models.JWTKey) // this is really a models.JWTKey, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

@@ -45,7 +45,7 @@ func init() {
         "tags": [
           "devices"
         ],
-        "operationId": "devices_list",
+        "operationId": "device_list",
         "responses": {
           "200": {
             "description": "OK",
@@ -60,7 +60,6 @@ func init() {
                 "properties": {
                   "device_id": {
                     "type": "string",
-                    "format": "uuid",
                     "x-isnullable": false
                   },
                   "device_name": {
@@ -69,7 +68,6 @@ func init() {
                   },
                   "last_meter_readings_time": {
                     "type": "string",
-                    "format": "date-time",
                     "x-isnullable": true
                   }
                 }
@@ -200,9 +198,40 @@ func init() {
           "devices"
         ],
         "operationId": "device_readings",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "meter_readings_time",
+                "temperature"
+              ],
+              "properties": {
+                "meter_readings_time": {
+                  "type": "string",
+                  "format": "date-time",
+                  "x-isnullable": false
+                },
+                "temperature": {
+                  "type": "number",
+                  "x-isnullable": false
+                }
+              },
+              "example": [
+                {
+                  "meter_readings_time": "2017-07-21T17:32:28Z",
+                  "temperature": 18.7
+                }
+              ]
+            }
+          }
+        ],
         "responses": {
           "201": {
-            "description": "No content"
+            "description": "Created"
           },
           "401": {
             "description": "Пользователь не аутентифицирован в системе",
@@ -258,6 +287,12 @@ func init() {
           },
           "401": {
             "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
+          "403": {
+            "description": "Пользователь не имеет доступа к данному ресурсу",
             "schema": {
               "$ref": "#/definitions/errorResult"
             }
@@ -351,16 +386,17 @@ func init() {
     "JWTKey": {
       "type": "object",
       "properties": {
-        "device_id": {
+        "email": {
           "type": "string",
           "x-isnullable": true
+        },
+        "id": {
+          "type": "string",
+          "x-isnullable": false
         },
         "type": {
-          "type": "string"
-        },
-        "user_id": {
           "type": "string",
-          "x-isnullable": true
+          "x-isnullable": false
         }
       }
     },
@@ -436,7 +472,7 @@ func init() {
         "tags": [
           "devices"
         ],
-        "operationId": "devices_list",
+        "operationId": "device_list",
         "responses": {
           "200": {
             "description": "OK",
@@ -451,7 +487,6 @@ func init() {
                 "properties": {
                   "device_id": {
                     "type": "string",
-                    "format": "uuid",
                     "x-isnullable": false
                   },
                   "device_name": {
@@ -460,7 +495,6 @@ func init() {
                   },
                   "last_meter_readings_time": {
                     "type": "string",
-                    "format": "date-time",
                     "x-isnullable": true
                   }
                 }
@@ -591,9 +625,40 @@ func init() {
           "devices"
         ],
         "operationId": "device_readings",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "meter_readings_time",
+                "temperature"
+              ],
+              "properties": {
+                "meter_readings_time": {
+                  "type": "string",
+                  "format": "date-time",
+                  "x-isnullable": false
+                },
+                "temperature": {
+                  "type": "number",
+                  "x-isnullable": false
+                }
+              },
+              "example": [
+                {
+                  "meter_readings_time": "2017-07-21T17:32:28Z",
+                  "temperature": 18.7
+                }
+              ]
+            }
+          }
+        ],
         "responses": {
           "201": {
-            "description": "No content"
+            "description": "Created"
           },
           "401": {
             "description": "Пользователь не аутентифицирован в системе",
@@ -649,6 +714,12 @@ func init() {
           },
           "401": {
             "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
+          "403": {
+            "description": "Пользователь не имеет доступа к данному ресурсу",
             "schema": {
               "$ref": "#/definitions/errorResult"
             }
@@ -742,16 +813,17 @@ func init() {
     "JWTKey": {
       "type": "object",
       "properties": {
-        "device_id": {
+        "email": {
           "type": "string",
           "x-isnullable": true
+        },
+        "id": {
+          "type": "string",
+          "x-isnullable": false
         },
         "type": {
-          "type": "string"
-        },
-        "user_id": {
           "type": "string",
-          "x-isnullable": true
+          "x-isnullable": false
         }
       }
     },
