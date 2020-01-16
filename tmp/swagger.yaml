@@ -364,7 +364,7 @@
     }
   },
   "definitions": {
-    "JWTKey": {
+    "AuthKey": {
       "type": "object",
       "properties": {
         "email": {

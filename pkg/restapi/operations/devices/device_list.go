@@ -18,16 +18,16 @@ import (
 )
 
 // DeviceListHandlerFunc turns a function with the right signature into a device list handler
-type DeviceListHandlerFunc func(DeviceListParams, *models.JWTKey) middleware.Responder
+type DeviceListHandlerFunc func(DeviceListParams, *models.AuthKey) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn DeviceListHandlerFunc) Handle(params DeviceListParams, principal *models.JWTKey) middleware.Responder {
+func (fn DeviceListHandlerFunc) Handle(params DeviceListParams, principal *models.AuthKey) middleware.Responder {
 	return fn(params, principal)
 }
 
 // DeviceListHandler interface for that can handle valid device list params
 type DeviceListHandler interface {
-	Handle(DeviceListParams, *models.JWTKey) middleware.Responder
+	Handle(DeviceListParams, *models.AuthKey) middleware.Responder
 }
 
 // NewDeviceList creates a new http.Handler for the device list operation
@@ -60,9 +60,9 @@ func (o *DeviceList) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	if aCtx != nil {
 		r = aCtx
 	}
-	var principal *models.JWTKey
+	var principal *models.AuthKey
 	if uprinc != nil {
-		principal = uprinc.(*models.JWTKey) // this is really a models.JWTKey, I promise
+		principal = uprinc.(*models.AuthKey) // this is really a models.AuthKey, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

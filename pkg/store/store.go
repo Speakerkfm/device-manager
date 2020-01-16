@@ -1,22 +1,23 @@
-package store_deprecated
+package store
 
 import (
-	"github.com/go-redis/cache"
-	"github.com/go-redis/redis"
-	"github.com/vmihailenco/msgpack"
+	"device-manager/pkg/models"
+	"sync"
 )
 
 type Store struct {
-	codec *cache.Codec
+	mu       *sync.Mutex
+	users    map[string]*models.User
+	devices  map[string]*models.Device
+	readings map[string][]*models.DeviceReadings
 }
 
-func NewStore(redisClient *redis.Client) *Store {
-	codec := &cache.Codec{
-		Redis: redisClient,
+func NewStore() *Store {
+	return &Store{
+		mu: &sync.Mutex{},
 
-		Marshal: msgpack.Marshal,
-
-		Unmarshal: msgpack.Unmarshal,
+		users:    make(map[string]*models.User, 10),
+		devices:  make(map[string]*models.Device, 10),
+		readings: make(map[string][]*models.DeviceReadings, 10),
 	}
-	return &Store{codec: codec}
 }

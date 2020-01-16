@@ -1,6 +1,10 @@
 package models
 
+import "time"
+
 type DeviceReadings struct {
-	Date        string
-	Temperature float64
+	MeterReadingsTime string  `json:"meter_readings_time"`
+	Temperature       float64 `json:"temperature"`
+
+	Created time.Time `json:"-"`
 }

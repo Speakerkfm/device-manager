@@ -383,7 +383,7 @@ func init() {
     }
   },
   "definitions": {
-    "JWTKey": {
+    "AuthKey": {
       "type": "object",
       "properties": {
         "email": {
@@ -810,7 +810,7 @@ func init() {
     }
   },
   "definitions": {
-    "JWTKey": {
+    "AuthKey": {
       "type": "object",
       "properties": {
         "email": {

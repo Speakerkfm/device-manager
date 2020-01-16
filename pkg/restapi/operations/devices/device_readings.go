@@ -18,16 +18,16 @@ import (
 )
 
 // DeviceReadingsHandlerFunc turns a function with the right signature into a device readings handler
-type DeviceReadingsHandlerFunc func(DeviceReadingsParams, *models.JWTKey) middleware.Responder
+type DeviceReadingsHandlerFunc func(DeviceReadingsParams, *models.AuthKey) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn DeviceReadingsHandlerFunc) Handle(params DeviceReadingsParams, principal *models.JWTKey) middleware.Responder {
+func (fn DeviceReadingsHandlerFunc) Handle(params DeviceReadingsParams, principal *models.AuthKey) middleware.Responder {
 	return fn(params, principal)
 }
 
 // DeviceReadingsHandler interface for that can handle valid device readings params
 type DeviceReadingsHandler interface {
-	Handle(DeviceReadingsParams, *models.JWTKey) middleware.Responder
+	Handle(DeviceReadingsParams, *models.AuthKey) middleware.Responder
 }
 
 // NewDeviceReadings creates a new http.Handler for the device readings operation
@@ -60,9 +60,9 @@ func (o *DeviceReadings) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	if aCtx != nil {
 		r = aCtx
 	}
-	var principal *models.JWTKey
+	var principal *models.AuthKey
 	if uprinc != nil {
-		principal = uprinc.(*models.JWTKey) // this is really a models.JWTKey, I promise
+		principal = uprinc.(*models.AuthKey) // this is really a models.AuthKey, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

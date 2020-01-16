@@ -5,7 +5,6 @@ import (
 	"device-manager/pkg/restapi"
 	"device-manager/pkg/restapi/operations"
 	"github.com/go-openapi/loads"
-	"github.com/go-redis/redis"
 	"github.com/jessevdk/go-flags"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -54,13 +53,13 @@ func main(){
 	defer server.Shutdown()
 
 	//redis
-	redisOpt := redis.Options{Addr: conf.RedisHost}
-	redisClient := redis.NewClient(&redisOpt)
-	if _, err = redisClient.Ping().Result(); err != nil {
-		panic(err)
-	}
+	//redisOpt := redis.Options{Addr: conf.RedisHost}
+	//redisClient := redis.NewClient(&redisOpt)
+	//if _, err = redisClient.Ping().Result(); err != nil {
+	//	panic(err)
+	//}
 
-	handler := configureAPI(api, redisClient, conf)
+	handler := configureAPI(api, conf)
 	server.SetHandler(handler)
 	server.Port = conf.AppPort
 

@@ -34,11 +34,11 @@ func (j *JWT) CreateJWT(entity interface{}, entityType string) (string, error) {
 	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(j.secret))
 }
 
-func (j *JWT) ValidateUserToken(token string) (*models.JWTKey, error) {
+func (j *JWT) ValidateUserToken(token string) (*models.AuthKey, error) {
 	return j.validateToken(token, typeUser)
 }
 
-func (j *JWT) ValidateDeviceToken(token string) (*models.JWTKey, error) {
+func (j *JWT) ValidateDeviceToken(token string) (*models.AuthKey, error) {
 	return j.validateToken(token, typeDevice)
 }
 
@@ -61,7 +61,7 @@ func (j *JWT) Parse(tokenString, jwtSecret string) (jwt.MapClaims, bool) {
 	return nil, false
 }
 
-func (j *JWT) validateToken(token, tokenType string) (*models.JWTKey, error) {
+func (j *JWT) validateToken(token, tokenType string) (*models.AuthKey, error) {
 	token = strings.TrimPrefix(token, tokenPrefix)
 
 	claims, ok := j.Parse(token, j.secret)
@@ -75,7 +75,7 @@ func (j *JWT) validateToken(token, tokenType string) (*models.JWTKey, error) {
 
 	deviceID := claims["id"].(string)
 
-	entity := &models.JWTKey{ID: deviceID, Type: tokenType}
+	entity := &models.AuthKey{ID: deviceID, Type: tokenType}
 
 	if email, ok := claims["email"]; ok {
 		userEmail := email.(string)

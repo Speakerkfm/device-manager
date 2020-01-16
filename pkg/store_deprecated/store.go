@@ -1,4 +1,4 @@
-package store
+package store_deprecated
 
 import (
 	"github.com/go-redis/cache"

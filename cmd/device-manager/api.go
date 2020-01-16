@@ -11,14 +11,13 @@ import (
 	"device-manager/pkg/service"
 	"device-manager/pkg/store"
 	"encoding/json"
-	"github.com/go-redis/redis"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 	"net/http"
 )
 
-func configureAPI(api *operations.DeviceManagerAPI, redisClient *redis.Client, conf *flags.Config) http.Handler {
-	st := store.NewStore(redisClient)
+func configureAPI(api *operations.DeviceManagerAPI, conf *flags.Config) http.Handler {
+	st := store.NewStore()
 
 	jwtService := service.NewJWT(conf.AppSecret)
 	userService := service.NewUserService(st, jwtService)

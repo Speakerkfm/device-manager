@@ -3,18 +3,18 @@ package users
 import (
 	"device-manager/pkg/errors/httperrors"
 	"device-manager/pkg/errors/programerrors"
+	"device-manager/pkg/interfaces"
 	"device-manager/pkg/restapi/operations/users"
-	"device-manager/pkg/service/serviceiface"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 )
 
 type Context struct {
-	userService serviceiface.UserService
+	userService interfaces.UserService
 }
 
-func NewContext(userService serviceiface.UserService) *Context {
+func NewContext(userService interfaces.UserService) *Context {
 	return &Context{userService: userService}
 }
 

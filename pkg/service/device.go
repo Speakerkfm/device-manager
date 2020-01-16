@@ -2,19 +2,18 @@ package service
 
 import (
 	"device-manager/pkg/errors/programerrors"
+	"device-manager/pkg/interfaces"
 	"device-manager/pkg/models"
-	"device-manager/pkg/service/serviceiface"
-	"device-manager/pkg/store"
 )
 
 const typeDevice = "device"
 
 type DeviceService struct {
-	store store.StoreInterface
-	jwt   serviceiface.JWT
+	store interfaces.StoreInterface
+	jwt   interfaces.JWT
 }
 
-func NewDeviceService(store store.StoreInterface, jwt serviceiface.JWT) *DeviceService {
+func NewDeviceService(store interfaces.StoreInterface, jwt interfaces.JWT) *DeviceService {
 	return &DeviceService{store: store, jwt: jwt}
 }
 
@@ -52,6 +51,21 @@ func (ds *DeviceService) GetUserDevices(userEmail string) ([]*models.Device, err
 	}
 
 	return devices, nil
+}
+
+func (ds *DeviceService) CheckUserDevice(userEmail, deviceID string) bool {
+	user, err := ds.store.GetUserByEmail(userEmail)
+	if err != nil {
+		return false
+	}
+
+	for _, userDeviceID := range user.DevicesIDs {
+		if userDeviceID == deviceID {
+			return true
+		}
+	}
+
+	return false
 }
 
 func (ds *DeviceService) GetDeviceStats(deviceID string) ([]*models.DeviceReadings, error) {

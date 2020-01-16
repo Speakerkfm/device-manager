@@ -1,18 +1,17 @@
 package service
 
 import (
-	"device-manager/pkg/service/serviceiface"
-	"device-manager/pkg/store"
+	"device-manager/pkg/interfaces"
 )
 
 const typeUser = "user"
 
 type UserService struct {
-	store  store.StoreInterface
-	jwt serviceiface.JWT
+	store interfaces.StoreInterface
+	jwt   interfaces.JWT
 }
 
-func NewUserService(store store.StoreInterface, jwt serviceiface.JWT) *UserService {
+func NewUserService(store interfaces.StoreInterface, jwt interfaces.JWT) *UserService {
 	return &UserService{store: store, jwt: jwt}
 }
 

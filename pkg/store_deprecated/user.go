@@ -1,4 +1,4 @@
-package store
+package store_deprecated
 
 import (
 	"device-manager/pkg/errors/programerrors"

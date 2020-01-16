@@ -3,19 +3,19 @@ package devices
 import (
 	"device-manager/pkg/errors/httperrors"
 	"device-manager/pkg/errors/programerrors"
+	"device-manager/pkg/interfaces"
 	"device-manager/pkg/models"
 	"device-manager/pkg/restapi/operations/devices"
-	"device-manager/pkg/service/serviceiface"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 )
 
 type Context struct {
-	deviceService serviceiface.DeviceService
+	deviceService interfaces.DeviceService
 }
 
-func NewContext(deviceService serviceiface.DeviceService) *Context {
+func NewContext(deviceService interfaces.DeviceService) *Context {
 	return &Context{deviceService: deviceService}
 }
 
@@ -28,7 +28,7 @@ func (c *Context) Register(params devices.DeviceRegistrationParams) middleware.R
 	return devices.NewDeviceRegistrationOK().WithPayload(&devices.DeviceRegistrationOKBody{Token: token})
 }
 
-func (c *Context) GetList(params devices.DeviceListParams, user *models.JWTKey) middleware.Responder {
+func (c *Context) GetList(params devices.DeviceListParams, user *models.AuthKey) middleware.Responder {
 	userDevices, err := c.deviceService.GetUserDevices(*user.Email)
 	if err != nil {
 		return getErrorResponse(err)
@@ -37,15 +37,20 @@ func (c *Context) GetList(params devices.DeviceListParams, user *models.JWTKey) 
 	devicesList := make([]*devices.DeviceListOKBodyItems0, len(userDevices))
 	for idx, userDevice := range userDevices {
 		devicesList[idx] = &devices.DeviceListOKBodyItems0{
-			DeviceID:   userDevice.ID,
-			DeviceName: userDevice.Name,
+			DeviceID:              userDevice.ID,
+			DeviceName:            userDevice.Name,
+			LastMeterReadingsTime: userDevice.LastMeterReadingsTime,
 		}
 	}
 
 	return devices.NewDeviceListOK().WithPayload(devicesList)
 }
 
-func (c *Context) GetStats(params devices.DeviceStatsParams, user *models.JWTKey) middleware.Responder {
+func (c *Context) GetStats(params devices.DeviceStatsParams, user *models.AuthKey) middleware.Responder {
+	if !c.deviceService.CheckUserDevice(*user.Email, params.DeviceID.String()) {
+		return devices.NewDeviceStatsUnauthorized().WithPayload(&httperrors.UnauthorizedError)
+	}
+
 	deviceReadings, err := c.deviceService.GetDeviceStats(params.DeviceID.String())
 	if err != nil {
 		getErrorResponse(err)
@@ -54,7 +59,7 @@ func (c *Context) GetStats(params devices.DeviceStatsParams, user *models.JWTKey
 	return devices.NewDeviceStatsOK().WithPayload(deviceReadings)
 }
 
-func (c *Context) SaveReadings(params devices.DeviceReadingsParams, device *models.JWTKey) middleware.Responder {
+func (c *Context) SaveReadings(params devices.DeviceReadingsParams, device *models.AuthKey) middleware.Responder {
 	if err := c.deviceService.SaveDeviceReadings(device.ID, params.Body.MeterReadingsTime.String(), params.Body.Temperature); err != nil {
 		return getErrorResponse(err)
 	}

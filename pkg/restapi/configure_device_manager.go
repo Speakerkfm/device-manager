@@ -17,7 +17,7 @@ import (
 	models "device-manager/pkg/models"
 )
 
-//go:generate swagger generate server --target ../../pkg --name DeviceManager --spec ../../tmp/swagger.yaml --tags users --tags devices --principal models.JWTKey --exclude-main
+//go:generate swagger generate server --target ../../pkg --name DeviceManager --spec ../../tmp/swagger.yaml --tags users --tags devices --principal models.AuthKey --exclude-main
 
 func configureFlags(api *operations.DeviceManagerAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -38,11 +38,11 @@ func configureAPI(api *operations.DeviceManagerAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	// Applies when the "Authorization" header is set
-	api.DeviceAuth = func(token string) (*models.JWTKey, error) {
+	api.DeviceAuth = func(token string) (*models.AuthKey, error) {
 		return nil, errors.NotImplemented("api key auth (Device) Authorization from header param [Authorization] has not yet been implemented")
 	}
 	// Applies when the "Authorization" header is set
-	api.UserAuth = func(token string) (*models.JWTKey, error) {
+	api.UserAuth = func(token string) (*models.AuthKey, error) {
 		return nil, errors.NotImplemented("api key auth (User) Authorization from header param [Authorization] has not yet been implemented")
 	}
 
@@ -51,16 +51,16 @@ func configureAPI(api *operations.DeviceManagerAPI) http.Handler {
 	//
 	// Example:
 	// api.APIAuthorizer = security.Authorized()
-	api.DevicesDeviceListHandler = devices.DeviceListHandlerFunc(func(params devices.DeviceListParams, principal *models.JWTKey) middleware.Responder {
+	api.DevicesDeviceListHandler = devices.DeviceListHandlerFunc(func(params devices.DeviceListParams, principal *models.AuthKey) middleware.Responder {
 		return middleware.NotImplemented("operation devices.DeviceList has not yet been implemented")
 	})
-	api.DevicesDeviceReadingsHandler = devices.DeviceReadingsHandlerFunc(func(params devices.DeviceReadingsParams, principal *models.JWTKey) middleware.Responder {
+	api.DevicesDeviceReadingsHandler = devices.DeviceReadingsHandlerFunc(func(params devices.DeviceReadingsParams, principal *models.AuthKey) middleware.Responder {
 		return middleware.NotImplemented("operation devices.DeviceReadings has not yet been implemented")
 	})
 	api.DevicesDeviceRegistrationHandler = devices.DeviceRegistrationHandlerFunc(func(params devices.DeviceRegistrationParams) middleware.Responder {
 		return middleware.NotImplemented("operation devices.DeviceRegistration has not yet been implemented")
 	})
-	api.DevicesDeviceStatsHandler = devices.DeviceStatsHandlerFunc(func(params devices.DeviceStatsParams, principal *models.JWTKey) middleware.Responder {
+	api.DevicesDeviceStatsHandler = devices.DeviceStatsHandlerFunc(func(params devices.DeviceStatsParams, principal *models.AuthKey) middleware.Responder {
 		return middleware.NotImplemented("operation devices.DeviceStats has not yet been implemented")
 	})
 	api.UsersUserRegistrationHandler = users.UserRegistrationHandlerFunc(func(params users.UserRegistrationParams) middleware.Responder {

@@ -42,16 +42,16 @@ func NewDeviceManagerAPI(spec *loads.Document) *DeviceManagerAPI {
 		BearerAuthenticator: security.BearerAuth,
 		JSONConsumer:        runtime.JSONConsumer(),
 		JSONProducer:        runtime.JSONProducer(),
-		DevicesDeviceListHandler: devices.DeviceListHandlerFunc(func(params devices.DeviceListParams, principal *models.JWTKey) middleware.Responder {
+		DevicesDeviceListHandler: devices.DeviceListHandlerFunc(func(params devices.DeviceListParams, principal *models.AuthKey) middleware.Responder {
 			return middleware.NotImplemented("operation DevicesDeviceList has not yet been implemented")
 		}),
-		DevicesDeviceReadingsHandler: devices.DeviceReadingsHandlerFunc(func(params devices.DeviceReadingsParams, principal *models.JWTKey) middleware.Responder {
+		DevicesDeviceReadingsHandler: devices.DeviceReadingsHandlerFunc(func(params devices.DeviceReadingsParams, principal *models.AuthKey) middleware.Responder {
 			return middleware.NotImplemented("operation DevicesDeviceReadings has not yet been implemented")
 		}),
 		DevicesDeviceRegistrationHandler: devices.DeviceRegistrationHandlerFunc(func(params devices.DeviceRegistrationParams) middleware.Responder {
 			return middleware.NotImplemented("operation DevicesDeviceRegistration has not yet been implemented")
 		}),
-		DevicesDeviceStatsHandler: devices.DeviceStatsHandlerFunc(func(params devices.DeviceStatsParams, principal *models.JWTKey) middleware.Responder {
+		DevicesDeviceStatsHandler: devices.DeviceStatsHandlerFunc(func(params devices.DeviceStatsParams, principal *models.AuthKey) middleware.Responder {
 			return middleware.NotImplemented("operation DevicesDeviceStats has not yet been implemented")
 		}),
 		UsersUserRegistrationHandler: users.UserRegistrationHandlerFunc(func(params users.UserRegistrationParams) middleware.Responder {
@@ -59,11 +59,11 @@ func NewDeviceManagerAPI(spec *loads.Document) *DeviceManagerAPI {
 		}),
 
 		// Applies when the "Authorization" header is set
-		DeviceAuth: func(token string) (*models.JWTKey, error) {
+		DeviceAuth: func(token string) (*models.AuthKey, error) {
 			return nil, errors.NotImplemented("api key auth (Device) Authorization from header param [Authorization] has not yet been implemented")
 		},
 		// Applies when the "Authorization" header is set
-		UserAuth: func(token string) (*models.JWTKey, error) {
+		UserAuth: func(token string) (*models.AuthKey, error) {
 			return nil, errors.NotImplemented("api key auth (User) Authorization from header param [Authorization] has not yet been implemented")
 		},
 
@@ -102,11 +102,11 @@ type DeviceManagerAPI struct {
 
 	// DeviceAuth registers a function that takes a token and returns a principal
 	// it performs authentication based on an api key Authorization provided in the header
-	DeviceAuth func(string) (*models.JWTKey, error)
+	DeviceAuth func(string) (*models.AuthKey, error)
 
 	// UserAuth registers a function that takes a token and returns a principal
 	// it performs authentication based on an api key Authorization provided in the header
-	UserAuth func(string) (*models.JWTKey, error)
+	UserAuth func(string) (*models.AuthKey, error)
 
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
 	APIAuthorizer runtime.Authorizer

@@ -29,7 +29,7 @@ paths:
     $ref: './device_stats.yaml'
 
 definitions:
-  JWTKey:
+  AuthKey:
     type: object
     properties:
       id:
