@@ -11,9 +11,9 @@ import (
 	"github.com/go-openapi/swag"
 )
 
-// JWTKey j w t key
-// swagger:model JWTKey
-type JWTKey struct {
+// AuthKey auth key
+// swagger:model AuthKey
+type AuthKey struct {
 
 	// email
 	Email *string `json:"email,omitempty"`
@@ -25,13 +25,13 @@ type JWTKey struct {
 	Type string `json:"type,omitempty"`
 }
 
-// Validate validates this j w t key
-func (m *JWTKey) Validate(formats strfmt.Registry) error {
+// Validate validates this auth key
+func (m *AuthKey) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
 // MarshalBinary interface implementation
-func (m *JWTKey) MarshalBinary() ([]byte, error) {
+func (m *AuthKey) MarshalBinary() ([]byte, error) {
 	if m == nil {
 		return nil, nil
 	}
@@ -39,8 +39,8 @@ func (m *JWTKey) MarshalBinary() ([]byte, error) {
 }
 
 // UnmarshalBinary interface implementation
-func (m *JWTKey) UnmarshalBinary(b []byte) error {
-	var res JWTKey
+func (m *AuthKey) UnmarshalBinary(b []byte) error {
+	var res AuthKey
 	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
