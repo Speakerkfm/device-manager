@@ -1,4 +1,4 @@
-runn:
+start:
 	export `cat .env` && go run cmd/device-manager/*.go --port=8000
 
 flatten:
@@ -25,3 +25,10 @@ mock: iface
 docker:
 	GOOS=linux GOARCH=amd64 go build -v cmd/device-manager/*.go
 	docker build -t device-manager .
+
+testci:
+	go test  -failfast `go list ./... | grep -e /device-manager/pkg/service/ -e /device-manager/pkg/store/` -v -coverprofile .testCoverage.txt
+	go tool cover -func=.testCoverage.txt
+
+test:
+	export `cat .env` && make testci
