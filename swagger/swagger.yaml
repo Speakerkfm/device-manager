@@ -9,16 +9,34 @@ consumes:
 - application/json
 schemes:
 - http
-components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
+securityDefinitions:
+  User:
+    type: apiKey
+    name: Authorization
+    in: header
+  Device:
+    type: apiKey
+    name: Authorization
+    in: header
 paths:
   /users:
     $ref: './users.yaml'
   /devices:
     $ref: './devices.yaml'
+  /devices/readings:
+    $ref: './device_readings.yaml'
   /devices/{device_id}/stats:
     $ref: './device_stats.yaml'
+
+definitions:
+  JWTKey:
+    type: object
+    properties:
+      user_id:
+        type: string
+        x-isnullable: true
+      device_id:
+        type: string
+        x-isnullable: true
+      type:
+        type: string

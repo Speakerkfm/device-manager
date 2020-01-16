@@ -67,7 +67,8 @@ type UserRegistrationBody struct {
 
 	// email
 	// Required: true
-	Email string `json:"email"`
+	// Format: email
+	Email strfmt.Email `json:"email"`
 }
 
 // Validate validates this user registration body
@@ -86,7 +87,11 @@ func (o *UserRegistrationBody) Validate(formats strfmt.Registry) error {
 
 func (o *UserRegistrationBody) validateEmail(formats strfmt.Registry) error {
 
-	if err := validate.RequiredString("body"+"."+"email", "body", string(o.Email)); err != nil {
+	if err := validate.Required("body"+"."+"email", "body", strfmt.Email(o.Email)); err != nil {
+		return err
+	}
+
+	if err := validate.FormatOf("body"+"."+"email", "body", "email", o.Email.String(), formats); err != nil {
 		return err
 	}
 

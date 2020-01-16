@@ -21,6 +21,8 @@ import (
 
 	"device-manager/pkg/restapi/operations/devices"
 	"device-manager/pkg/restapi/operations/users"
+
+	models "device-manager/pkg/models"
 )
 
 // NewDeviceManagerAPI creates a new DeviceManager instance
@@ -40,18 +42,33 @@ func NewDeviceManagerAPI(spec *loads.Document) *DeviceManagerAPI {
 		BearerAuthenticator: security.BearerAuth,
 		JSONConsumer:        runtime.JSONConsumer(),
 		JSONProducer:        runtime.JSONProducer(),
+		DevicesDeviceReadingsHandler: devices.DeviceReadingsHandlerFunc(func(params devices.DeviceReadingsParams, principal *models.JWTDeviceKey) middleware.Responder {
+			return middleware.NotImplemented("operation DevicesDeviceReadings has not yet been implemented")
+		}),
 		DevicesDeviceRegistrationHandler: devices.DeviceRegistrationHandlerFunc(func(params devices.DeviceRegistrationParams) middleware.Responder {
 			return middleware.NotImplemented("operation DevicesDeviceRegistration has not yet been implemented")
 		}),
-		DevicesDeviceStatsHandler: devices.DeviceStatsHandlerFunc(func(params devices.DeviceStatsParams, principal interface{}) middleware.Responder {
+		DevicesDeviceStatsHandler: devices.DeviceStatsHandlerFunc(func(params devices.DeviceStatsParams, principal *models.JWTDeviceKey) middleware.Responder {
 			return middleware.NotImplemented("operation DevicesDeviceStats has not yet been implemented")
 		}),
-		DevicesDevicesListHandler: devices.DevicesListHandlerFunc(func(params devices.DevicesListParams, principal interface{}) middleware.Responder {
+		DevicesDevicesListHandler: devices.DevicesListHandlerFunc(func(params devices.DevicesListParams, principal *models.JWTDeviceKey) middleware.Responder {
 			return middleware.NotImplemented("operation DevicesDevicesList has not yet been implemented")
 		}),
 		UsersUserRegistrationHandler: users.UserRegistrationHandlerFunc(func(params users.UserRegistrationParams) middleware.Responder {
 			return middleware.NotImplemented("operation UsersUserRegistration has not yet been implemented")
 		}),
+
+		// Applies when the "Authorization" header is set
+		DeviceAuth: func(token string) (*models.JWTDeviceKey, error) {
+			return nil, errors.NotImplemented("api key auth (Device) Authorization from header param [Authorization] has not yet been implemented")
+		},
+		// Applies when the "Authorization" header is set
+		UserAuth: func(token string) (*models.JWTDeviceKey, error) {
+			return nil, errors.NotImplemented("api key auth (User) Authorization from header param [Authorization] has not yet been implemented")
+		},
+
+		// default authorizer is authorized meaning no requests are blocked
+		APIAuthorizer: security.Authorized(),
 	}
 }
 
@@ -83,6 +100,19 @@ type DeviceManagerAPI struct {
 	// JSONProducer registers a producer for a "application/json" mime type
 	JSONProducer runtime.Producer
 
+	// DeviceAuth registers a function that takes a token and returns a principal
+	// it performs authentication based on an api key Authorization provided in the header
+	DeviceAuth func(string) (*models.JWTDeviceKey, error)
+
+	// UserAuth registers a function that takes a token and returns a principal
+	// it performs authentication based on an api key Authorization provided in the header
+	UserAuth func(string) (*models.JWTDeviceKey, error)
+
+	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
+	APIAuthorizer runtime.Authorizer
+
+	// DevicesDeviceReadingsHandler sets the operation handler for the device readings operation
+	DevicesDeviceReadingsHandler devices.DeviceReadingsHandler
 	// DevicesDeviceRegistrationHandler sets the operation handler for the device registration operation
 	DevicesDeviceRegistrationHandler devices.DeviceRegistrationHandler
 	// DevicesDeviceStatsHandler sets the operation handler for the device stats operation
@@ -154,6 +184,18 @@ func (o *DeviceManagerAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.DeviceAuth == nil {
+		unregistered = append(unregistered, "AuthorizationAuth")
+	}
+
+	if o.UserAuth == nil {
+		unregistered = append(unregistered, "AuthorizationAuth")
+	}
+
+	if o.DevicesDeviceReadingsHandler == nil {
+		unregistered = append(unregistered, "devices.DeviceReadingsHandler")
+	}
+
 	if o.DevicesDeviceRegistrationHandler == nil {
 		unregistered = append(unregistered, "devices.DeviceRegistrationHandler")
 	}
@@ -185,14 +227,32 @@ func (o *DeviceManagerAPI) ServeErrorFor(operationID string) func(http.ResponseW
 // AuthenticatorsFor gets the authenticators for the specified security schemes
 func (o *DeviceManagerAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
 
-	return nil
+	result := make(map[string]runtime.Authenticator)
+	for name, scheme := range schemes {
+		switch name {
+
+		case "Device":
+
+			result[name] = o.APIKeyAuthenticator(scheme.Name, scheme.In, func(token string) (interface{}, error) {
+				return o.DeviceAuth(token)
+			})
+
+		case "User":
+
+			result[name] = o.APIKeyAuthenticator(scheme.Name, scheme.In, func(token string) (interface{}, error) {
+				return o.UserAuth(token)
+			})
+
+		}
+	}
+	return result
 
 }
 
 // Authorizer returns the registered authorizer
 func (o *DeviceManagerAPI) Authorizer() runtime.Authorizer {
 
-	return nil
+	return o.APIAuthorizer
 
 }
 
@@ -267,6 +327,11 @@ func (o *DeviceManagerAPI) initHandlerCache() {
 	if o.handlers == nil {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/devices/readings"] = devices.NewDeviceReadings(o.context, o.DevicesDeviceReadingsHandler)
 
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)

@@ -1,8 +1,8 @@
 package models
 
-import "github.com/satori/go.uuid"
-
 type User struct {
-	ID    uuid.UUID `json:"id"`
-	Email string `json:"email"`
+	ID    string `json:"id" jwt:"id"`
+	Email string `json:"email" jwt:"email"`
+
+	Secret string `json:"secret" jwt:"-"`
 }

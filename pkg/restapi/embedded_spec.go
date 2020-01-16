@@ -38,7 +38,7 @@ func init() {
       "get": {
         "security": [
           {
-            "bearerAuth": []
+            "User": []
           }
         ],
         "description": "Получение списка устройств пользователя",
@@ -69,6 +69,7 @@ func init() {
                   },
                   "last_meter_readings_time": {
                     "type": "string",
+                    "format": "date-time",
                     "x-isnullable": true
                   }
                 }
@@ -83,6 +84,12 @@ func init() {
           },
           "401": {
             "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
+          "404": {
+            "description": "Запрашиваемый ресурс не найден",
             "schema": {
               "$ref": "#/definitions/errorResult"
             }
@@ -128,6 +135,7 @@ func init() {
                 },
                 "owner_email": {
                   "type": "string",
+                  "format": "email",
                   "x-isnullable": false
                 }
               },
@@ -157,6 +165,51 @@ func init() {
               }
             }
           },
+          "404": {
+            "description": "Запрашиваемый ресурс не найден",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
+          "422": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            },
+            "examples": {
+              "application/json": {
+                "error": {
+                  "code": "000-000",
+                  "description": "description"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/readings": {
+      "post": {
+        "security": [
+          {
+            "Device": []
+          }
+        ],
+        "description": "Передача показаний устройства",
+        "tags": [
+          "devices"
+        ],
+        "operationId": "device_readings",
+        "responses": {
+          "201": {
+            "description": "No content"
+          },
+          "401": {
+            "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
           "422": {
             "description": "Error",
             "schema": {
@@ -178,10 +231,10 @@ func init() {
       "get": {
         "security": [
           {
-            "bearerAuth": []
+            "User": []
           }
         ],
-        "description": "Получение списка устройств пользователя",
+        "description": "Получение статистики устройства",
         "tags": [
           "devices"
         ],
@@ -247,6 +300,7 @@ func init() {
               "properties": {
                 "email": {
                   "type": "string",
+                  "format": "email",
                   "x-isnullable": false
                 }
               },
@@ -294,6 +348,22 @@ func init() {
     }
   },
   "definitions": {
+    "JWTKey": {
+      "type": "object",
+      "properties": {
+        "device_id": {
+          "type": "string",
+          "x-isnullable": true
+        },
+        "type": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "string",
+          "x-isnullable": true
+        }
+      }
+    },
     "errorResult": {
       "description": "Ответ API с ошибкой",
       "type": "object",
@@ -323,6 +393,18 @@ func init() {
           }
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "Device": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    },
+    "User": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
     }
   }
 }`))
@@ -347,7 +429,7 @@ func init() {
       "get": {
         "security": [
           {
-            "bearerAuth": []
+            "User": []
           }
         ],
         "description": "Получение списка устройств пользователя",
@@ -378,6 +460,7 @@ func init() {
                   },
                   "last_meter_readings_time": {
                     "type": "string",
+                    "format": "date-time",
                     "x-isnullable": true
                   }
                 }
@@ -392,6 +475,12 @@ func init() {
           },
           "401": {
             "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
+          "404": {
+            "description": "Запрашиваемый ресурс не найден",
             "schema": {
               "$ref": "#/definitions/errorResult"
             }
@@ -437,6 +526,7 @@ func init() {
                 },
                 "owner_email": {
                   "type": "string",
+                  "format": "email",
                   "x-isnullable": false
                 }
               },
@@ -466,6 +556,51 @@ func init() {
               }
             }
           },
+          "404": {
+            "description": "Запрашиваемый ресурс не найден",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
+          "422": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            },
+            "examples": {
+              "application/json": {
+                "error": {
+                  "code": "000-000",
+                  "description": "description"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/readings": {
+      "post": {
+        "security": [
+          {
+            "Device": []
+          }
+        ],
+        "description": "Передача показаний устройства",
+        "tags": [
+          "devices"
+        ],
+        "operationId": "device_readings",
+        "responses": {
+          "201": {
+            "description": "No content"
+          },
+          "401": {
+            "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
           "422": {
             "description": "Error",
             "schema": {
@@ -487,10 +622,10 @@ func init() {
       "get": {
         "security": [
           {
-            "bearerAuth": []
+            "User": []
           }
         ],
-        "description": "Получение списка устройств пользователя",
+        "description": "Получение статистики устройства",
         "tags": [
           "devices"
         ],
@@ -556,6 +691,7 @@ func init() {
               "properties": {
                 "email": {
                   "type": "string",
+                  "format": "email",
                   "x-isnullable": false
                 }
               },
@@ -603,6 +739,22 @@ func init() {
     }
   },
   "definitions": {
+    "JWTKey": {
+      "type": "object",
+      "properties": {
+        "device_id": {
+          "type": "string",
+          "x-isnullable": true
+        },
+        "type": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "string",
+          "x-isnullable": true
+        }
+      }
+    },
     "errorResult": {
       "description": "Ответ API с ошибкой",
       "type": "object",
@@ -632,6 +784,18 @@ func init() {
           }
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "Device": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    },
+    "User": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
     }
   }
 }`))

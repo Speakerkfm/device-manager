@@ -60,7 +60,7 @@ func main(){
 		panic(err)
 	}
 
-	handler := configureAPI(api, redisClient)
+	handler := configureAPI(api, redisClient, conf)
 	server.SetHandler(handler)
 	server.Port = conf.AppPort
 

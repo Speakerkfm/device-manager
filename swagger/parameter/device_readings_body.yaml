@@ -1,0 +1,23 @@
+schema:
+  type: object
+  properties:
+    meter_readings_time:
+      type: string
+      format: date-time
+      x-isnullable: false
+    temperature:
+      type: number
+      x-isnullable: false
+  required:
+  - meter_readings_time
+  - temperature
+  example:
+    [
+    {
+      meter_readings_time: 2017-07-21T17:32:28Z,
+      temperature: 18.7
+    }
+    ]
+in: body
+name: body
+required: true

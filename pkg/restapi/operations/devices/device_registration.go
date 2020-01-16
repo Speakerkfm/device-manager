@@ -71,7 +71,8 @@ type DeviceRegistrationBody struct {
 
 	// owner email
 	// Required: true
-	OwnerEmail string `json:"owner_email"`
+	// Format: email
+	OwnerEmail strfmt.Email `json:"owner_email"`
 }
 
 // Validate validates this device registration body
@@ -103,7 +104,11 @@ func (o *DeviceRegistrationBody) validateDeviceName(formats strfmt.Registry) err
 
 func (o *DeviceRegistrationBody) validateOwnerEmail(formats strfmt.Registry) error {
 
-	if err := validate.RequiredString("body"+"."+"owner_email", "body", string(o.OwnerEmail)); err != nil {
+	if err := validate.Required("body"+"."+"owner_email", "body", strfmt.Email(o.OwnerEmail)); err != nil {
+		return err
+	}
+
+	if err := validate.FormatOf("body"+"."+"owner_email", "body", "email", o.OwnerEmail.String(), formats); err != nil {
 		return err
 	}
 

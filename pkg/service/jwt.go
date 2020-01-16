@@ -7,22 +7,43 @@ import (
 )
 
 const (
-	tokenExpirationTime = 24 * 60 * 60 * time.Second
+	tokenExpirationTime = 24 * time.Hour
 )
 
 type JWT struct {
 	secret string
 }
 
-func NewJWT() *JWT {
-	return &JWT{secret: "asdfqwerqe"}
+func NewJWT(secret string) *JWT {
+	return &JWT{secret: secret}
 }
 
-func (j *JWT) CreateUserJWT(user *models.User) (string, error){
+func (j *JWT) CreateUserJWT(user *models.User) (string, error) {
 	claims, err := structToMapClaims(user)
 	if err != nil {
 		return "", err
 	}
 
+	claims["type"] = typeUser
+
 	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(j.secret))
+}
+
+func (j *JWT) CreateDeviceJWT(user *models.User, device *models.Device) (string, error) {
+	claims, err := structToMapClaims(device)
+	if err != nil {
+		return "", err
+	}
+
+	claims["type"] = typeDevice
+
+	return jwt.NewWithClaims(jwt.SigningMethodHS256, claims).SignedString([]byte(user.Secret))
+}
+
+func (j *JWT) ValidateUserToken(token string) (*models.JWTKey, error) {
+	return nil, nil
+}
+
+func (j *JWT) ValidateDeviceToken(token string) (*models.JWTKey, error) {
+	return nil, nil
 }

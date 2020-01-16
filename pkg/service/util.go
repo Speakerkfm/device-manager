@@ -5,6 +5,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"reflect"
 	"strings"
+	"time"
 )
 
 func stringFromPointer(s *string) string {
@@ -15,7 +16,11 @@ func stringFromPointer(s *string) string {
 }
 
 func structToMapClaims(i interface{}) (jwt.MapClaims, error) {
-	keyValues := jwt.MapClaims{}
+	now := time.Now()
+	keyValues := jwt.MapClaims{
+		"exp": now.Add(tokenExpirationTime).Unix(),
+		"iat": now.Unix(),
+	}
 
 	iVal := reflect.ValueOf(i).Elem()
 	typ := iVal.Type()
@@ -28,7 +33,10 @@ func structToMapClaims(i interface{}) (jwt.MapClaims, error) {
 		if !found {
 			return keyValues, fmt.Errorf("expected field not found in jwt claims srtuct")
 		}
-		name := strings.Split(typField.Tag.Get("json"), ",")[0]
+		name := strings.Split(typField.Tag.Get("jwt"), ",")[0]
+		if name == "-" {
+			continue
+		}
 
 		var v interface{}
 		switch f.Interface().(type) {

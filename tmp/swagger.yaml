@@ -19,7 +19,7 @@
       "get": {
         "security": [
           {
-            "bearerAuth": []
+            "User": []
           }
         ],
         "description": "Получение списка устройств пользователя",
@@ -50,6 +50,7 @@
                   },
                   "last_meter_readings_time": {
                     "type": "string",
+                    "format": "date-time",
                     "x-isnullable": true
                   }
                 }
@@ -64,6 +65,12 @@
           },
           "401": {
             "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
+          "404": {
+            "description": "Запрашиваемый ресурс не найден",
             "schema": {
               "$ref": "#/definitions/errorResult"
             }
@@ -109,6 +116,7 @@
                 },
                 "owner_email": {
                   "type": "string",
+                  "format": "email",
                   "x-isnullable": false
                 }
               },
@@ -138,6 +146,51 @@
               }
             }
           },
+          "404": {
+            "description": "Запрашиваемый ресурс не найден",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
+          "422": {
+            "description": "Error",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            },
+            "examples": {
+              "application/json": {
+                "error": {
+                  "code": "000-000",
+                  "description": "description"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/devices/readings": {
+      "post": {
+        "security": [
+          {
+            "Device": []
+          }
+        ],
+        "description": "Передача показаний устройства",
+        "tags": [
+          "devices"
+        ],
+        "operationId": "device_readings",
+        "responses": {
+          "201": {
+            "description": "No content"
+          },
+          "401": {
+            "description": "Пользователь не аутентифицирован в системе",
+            "schema": {
+              "$ref": "#/definitions/errorResult"
+            }
+          },
           "422": {
             "description": "Error",
             "schema": {
@@ -159,10 +212,10 @@
       "get": {
         "security": [
           {
-            "bearerAuth": []
+            "User": []
           }
         ],
-        "description": "Получение списка устройств пользователя",
+        "description": "Получение статистики устройства",
         "tags": [
           "devices"
         ],
@@ -228,6 +281,7 @@
               "properties": {
                 "email": {
                   "type": "string",
+                  "format": "email",
                   "x-isnullable": false
                 }
               },
@@ -275,6 +329,22 @@
     }
   },
   "definitions": {
+    "JWTKey": {
+      "type": "object",
+      "properties": {
+        "device_id": {
+          "type": "string",
+          "x-isnullable": true
+        },
+        "type": {
+          "type": "string"
+        },
+        "user_id": {
+          "type": "string",
+          "x-isnullable": true
+        }
+      }
+    },
     "errorResult": {
       "description": "Ответ API с ошибкой",
       "type": "object",
@@ -304,6 +374,18 @@
           }
         }
       }
+    }
+  },
+  "securityDefinitions": {
+    "Device": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    },
+    "User": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
     }
   }
 }

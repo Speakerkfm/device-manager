@@ -13,40 +13,40 @@ import (
 	models "device-manager/pkg/models"
 )
 
-// DeviceStatsHandlerFunc turns a function with the right signature into a device stats handler
-type DeviceStatsHandlerFunc func(DeviceStatsParams, *models.JWTDeviceKey) middleware.Responder
+// DeviceReadingsHandlerFunc turns a function with the right signature into a device readings handler
+type DeviceReadingsHandlerFunc func(DeviceReadingsParams, *models.JWTDeviceKey) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn DeviceStatsHandlerFunc) Handle(params DeviceStatsParams, principal *models.JWTDeviceKey) middleware.Responder {
+func (fn DeviceReadingsHandlerFunc) Handle(params DeviceReadingsParams, principal *models.JWTDeviceKey) middleware.Responder {
 	return fn(params, principal)
 }
 
-// DeviceStatsHandler interface for that can handle valid device stats params
-type DeviceStatsHandler interface {
-	Handle(DeviceStatsParams, *models.JWTDeviceKey) middleware.Responder
+// DeviceReadingsHandler interface for that can handle valid device readings params
+type DeviceReadingsHandler interface {
+	Handle(DeviceReadingsParams, *models.JWTDeviceKey) middleware.Responder
 }
 
-// NewDeviceStats creates a new http.Handler for the device stats operation
-func NewDeviceStats(ctx *middleware.Context, handler DeviceStatsHandler) *DeviceStats {
-	return &DeviceStats{Context: ctx, Handler: handler}
+// NewDeviceReadings creates a new http.Handler for the device readings operation
+func NewDeviceReadings(ctx *middleware.Context, handler DeviceReadingsHandler) *DeviceReadings {
+	return &DeviceReadings{Context: ctx, Handler: handler}
 }
 
-/*DeviceStats swagger:route GET /devices/{device_id}/stats devices deviceStats
+/*DeviceReadings swagger:route POST /devices/readings devices deviceReadings
 
-Получение статистики устройства
+Передача показаний устройства
 
 */
-type DeviceStats struct {
+type DeviceReadings struct {
 	Context *middleware.Context
-	Handler DeviceStatsHandler
+	Handler DeviceReadingsHandler
 }
 
-func (o *DeviceStats) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
+func (o *DeviceReadings) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	route, rCtx, _ := o.Context.RouteInfo(r)
 	if rCtx != nil {
 		r = rCtx
 	}
-	var Params = NewDeviceStatsParams()
+	var Params = NewDeviceReadingsParams()
 
 	uprinc, aCtx, err := o.Context.Authorize(r, route)
 	if err != nil {

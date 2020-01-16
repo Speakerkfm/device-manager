@@ -8,4 +8,7 @@ import (
 
 type JWT interface {
 	CreateUserJWT(user *models.User) (string, error)
+	CreateDeviceJWT(user *models.User, device *models.Device) (string, error)
+	ValidateUserToken(token string) (*models.JWTKey, error)
+	ValidateDeviceToken(token string) (*models.JWTKey, error)
 }

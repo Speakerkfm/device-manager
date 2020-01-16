@@ -6,6 +6,8 @@ post:
   responses:
     200:
       $ref: './response/device_registration/response_200.yaml'
+    404:
+      $ref: './response/response_404.yaml'
     422:
       $ref: './response/response_422.yaml'
   parameters:
@@ -16,12 +18,14 @@ get:
   description: Получение списка устройств пользователя
   operationId: devices_list
   security:
-  - bearerAuth: []
+  - User: []
   responses:
     200:
       $ref: './response/devices_list/response_200.yaml'
     401:
       $ref: './response/response_401.yaml'
+    404:
+      $ref: './response/response_404.yaml'
     422:
       $ref: './response/response_422.yaml'
   parameters:

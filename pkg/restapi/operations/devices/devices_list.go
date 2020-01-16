@@ -13,19 +13,21 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	swag "github.com/go-openapi/swag"
 	validate "github.com/go-openapi/validate"
+
+	models "device-manager/pkg/models"
 )
 
 // DevicesListHandlerFunc turns a function with the right signature into a devices list handler
-type DevicesListHandlerFunc func(DevicesListParams, interface{}) middleware.Responder
+type DevicesListHandlerFunc func(DevicesListParams, *models.JWTDeviceKey) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn DevicesListHandlerFunc) Handle(params DevicesListParams, principal interface{}) middleware.Responder {
+func (fn DevicesListHandlerFunc) Handle(params DevicesListParams, principal *models.JWTDeviceKey) middleware.Responder {
 	return fn(params, principal)
 }
 
 // DevicesListHandler interface for that can handle valid devices list params
 type DevicesListHandler interface {
-	Handle(DevicesListParams, interface{}) middleware.Responder
+	Handle(DevicesListParams, *models.JWTDeviceKey) middleware.Responder
 }
 
 // NewDevicesList creates a new http.Handler for the devices list operation
@@ -58,9 +60,9 @@ func (o *DevicesList) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	if aCtx != nil {
 		r = aCtx
 	}
-	var principal interface{}
+	var principal *models.JWTDeviceKey
 	if uprinc != nil {
-		principal = uprinc
+		principal = uprinc.(*models.JWTDeviceKey) // this is really a models.JWTDeviceKey, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
@@ -88,7 +90,8 @@ type DevicesListOKBodyItems0 struct {
 	DeviceName string `json:"device_name"`
 
 	// last meter readings time
-	LastMeterReadingsTime *string `json:"last_meter_readings_time,omitempty"`
+	// Format: date-time
+	LastMeterReadingsTime *strfmt.DateTime `json:"last_meter_readings_time,omitempty"`
 }
 
 // Validate validates this devices list o k body items0
@@ -100,6 +103,10 @@ func (o *DevicesListOKBodyItems0) Validate(formats strfmt.Registry) error {
 	}
 
 	if err := o.validateDeviceName(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateLastMeterReadingsTime(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -125,6 +132,19 @@ func (o *DevicesListOKBodyItems0) validateDeviceID(formats strfmt.Registry) erro
 func (o *DevicesListOKBodyItems0) validateDeviceName(formats strfmt.Registry) error {
 
 	if err := validate.RequiredString("device_name", "body", string(o.DeviceName)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *DevicesListOKBodyItems0) validateLastMeterReadingsTime(formats strfmt.Registry) error {
+
+	if swag.IsZero(o.LastMeterReadingsTime) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("last_meter_readings_time", "body", "date-time", o.LastMeterReadingsTime.String(), formats); err != nil {
 		return err
 	}
 

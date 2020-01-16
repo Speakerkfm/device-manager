@@ -7,6 +7,7 @@ schema:
       x-isnullable: false
     owner_email:
       type: string
+      format: email
       x-isnullable: false
   required:
   - device_name

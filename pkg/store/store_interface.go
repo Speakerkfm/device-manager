@@ -7,5 +7,7 @@ import (
 )
 
 type StoreInterface interface {
+	NewDevice(user *models.User, deviceName, ownerEmail string) (*models.Device, error)
 	NewUser(email string) (*models.User, error)
+	GetUserByEmail(email string) (*models.User, error)
 }

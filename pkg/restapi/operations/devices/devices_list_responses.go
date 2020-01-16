@@ -104,6 +104,50 @@ func (o *DevicesListUnauthorized) WriteResponse(rw http.ResponseWriter, producer
 	}
 }
 
+// DevicesListNotFoundCode is the HTTP code returned for type DevicesListNotFound
+const DevicesListNotFoundCode int = 404
+
+/*DevicesListNotFound Запрашиваемый ресурс не найден
+
+swagger:response devicesListNotFound
+*/
+type DevicesListNotFound struct {
+
+	/*
+	  In: Body
+	*/
+	Payload *models.ErrorResult `json:"body,omitempty"`
+}
+
+// NewDevicesListNotFound creates DevicesListNotFound with default headers values
+func NewDevicesListNotFound() *DevicesListNotFound {
+
+	return &DevicesListNotFound{}
+}
+
+// WithPayload adds the payload to the devices list not found response
+func (o *DevicesListNotFound) WithPayload(payload *models.ErrorResult) *DevicesListNotFound {
+	o.Payload = payload
+	return o
+}
+
+// SetPayload sets the payload to the devices list not found response
+func (o *DevicesListNotFound) SetPayload(payload *models.ErrorResult) {
+	o.Payload = payload
+}
+
+// WriteResponse to the client
+func (o *DevicesListNotFound) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+
+	rw.WriteHeader(404)
+	if o.Payload != nil {
+		payload := o.Payload
+		if err := producer.Produce(rw, payload); err != nil {
+			panic(err) // let the recovery middleware deal with this
+		}
+	}
+}
+
 // DevicesListUnprocessableEntityCode is the HTTP code returned for type DevicesListUnprocessableEntity
 const DevicesListUnprocessableEntityCode int = 422
 

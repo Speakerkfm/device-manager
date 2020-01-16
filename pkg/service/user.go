@@ -5,17 +5,19 @@ import (
 	"device-manager/pkg/store"
 )
 
+const typeUser = "user"
+
 type UserService struct {
-	st  store.StoreInterface
+	store  store.StoreInterface
 	jwt serviceiface.JWT
 }
 
-func NewUserService(st store.StoreInterface, jwt serviceiface.JWT) *UserService {
-	return &UserService{st: st, jwt: jwt}
+func NewUserService(store store.StoreInterface, jwt serviceiface.JWT) *UserService {
+	return &UserService{store: store, jwt: jwt}
 }
 
 func (us *UserService) NewUser(email string) (string, error) {
-	user, err := us.st.NewUser(email)
+	user, err := us.store.NewUser(email)
 	if err != nil {
 		return "", err
 	}

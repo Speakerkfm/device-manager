@@ -4,6 +4,7 @@ schema:
   properties:
     email:
       type: string
+      format: email
       x-isnullable: false
   required:
   - email

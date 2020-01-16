@@ -11,3 +11,15 @@ func (e EmailTaken) Error() string {
 func NewEmailTaken(msg string) EmailTaken {
 	return EmailTaken{msg: msg}
 }
+
+type ObjectNotFount struct {
+	msg string
+}
+
+func (e ObjectNotFount) Error() string {
+	return e.msg
+}
+
+func NewObjectNotFount(msg string) ObjectNotFount {
+	return ObjectNotFount{msg: msg}
+}
