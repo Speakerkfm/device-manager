@@ -13,23 +13,23 @@
     dep ensure
     ```
     
-3. Запустить тесты
+3. Настроить конфиг
+    ```sh
+    cp .env.dist .env
+    ```
+    
+4. Запустить тесты
     ```sh
     make test
     ```
     
-4. Запустить API локально
+5. Запустить API локально
     ```sh
     make start
     ```
     
 ### Документация 
-    ```sh
     make doc
-    ```
  
  ### Запуск в Docker 
-    ```sh
      docker run -d -p 8080:8080 --network=host speakerkfm/device-service
-     ```
-     
