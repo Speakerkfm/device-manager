@@ -32,4 +32,4 @@
     make doc
  
  ### Запуск в Docker 
-     docker run -d -p 8080:8080 --network=host speakerkfm/device-manager
+     docker run -d -p 8080:8080 speakerkfm/device-manager
