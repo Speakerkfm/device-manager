@@ -10,11 +10,11 @@ import (
 	runtime "github.com/go-openapi/runtime"
 	middleware "github.com/go-openapi/runtime/middleware"
 
-	"device-manager/pkg/restapi/operations"
-	"device-manager/pkg/restapi/operations/devices"
-	"device-manager/pkg/restapi/operations/users"
+	"github.com/Speakerkfm/device-manager/pkg/restapi/operations"
+	"github.com/Speakerkfm/device-manager/pkg/restapi/operations/devices"
+	"github.com/Speakerkfm/device-manager/pkg/restapi/operations/users"
 
-	models "device-manager/pkg/models"
+	models "github.com/Speakerkfm/device-manager/pkg/models"
 )
 
 //go:generate swagger generate server --target ../../pkg --name DeviceManager --spec ../../tmp/swagger.yaml --tags users --tags devices --principal models.AuthKey --exclude-main

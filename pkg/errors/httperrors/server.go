@@ -1,6 +1,6 @@
 package httperrors
 
-import "device-manager/pkg/models"
+import "github.com/Speakerkfm/device-manager/pkg/models"
 
 var InternalServerError = models.ErrorResult{Error: &models.ErrorResultError{
 	Code:        "000-001",

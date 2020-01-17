@@ -1,7 +1,7 @@
 package store
 
 import (
-	"device-manager/pkg/models"
+	"github.com/Speakerkfm/device-manager/pkg/models"
 	"time"
 )
 

@@ -1,8 +1,8 @@
 package store_deprecated
 
 import (
-	"device-manager/pkg/errors/programerrors"
-	"device-manager/pkg/models"
+	"github.com/Speakerkfm/device-manager/pkg/errors/programerrors"
+	"github.com/Speakerkfm/device-manager/pkg/models"
 	"fmt"
 	"github.com/go-redis/cache"
 	"github.com/satori/go.uuid"

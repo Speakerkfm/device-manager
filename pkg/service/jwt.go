@@ -1,7 +1,7 @@
 package service
 
 import (
-	"device-manager/pkg/models"
+	"github.com/Speakerkfm/device-manager/pkg/models"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/go-openapi/errors"

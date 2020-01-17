@@ -1,8 +1,8 @@
 package store
 
 import (
-	"device-manager/pkg/errors/programerrors"
-	"device-manager/pkg/models"
+	"github.com/Speakerkfm/device-manager/pkg/errors/programerrors"
+	"github.com/Speakerkfm/device-manager/pkg/models"
 	"github.com/satori/go.uuid"
 )
 

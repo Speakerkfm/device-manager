@@ -3,7 +3,7 @@
 package interfaces
 
 import (
-	"device-manager/pkg/models"
+	"github.com/Speakerkfm/device-manager/pkg/models"
 )
 
 type DeviceService interface {

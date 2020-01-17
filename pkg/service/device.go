@@ -1,9 +1,9 @@
 package service
 
 import (
-	"device-manager/pkg/errors/programerrors"
-	"device-manager/pkg/interfaces"
-	"device-manager/pkg/models"
+	"github.com/Speakerkfm/device-manager/pkg/errors/programerrors"
+	"github.com/Speakerkfm/device-manager/pkg/interfaces"
+	"github.com/Speakerkfm/device-manager/pkg/models"
 )
 
 const typeDevice = "device"

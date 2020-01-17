@@ -14,7 +14,7 @@ import (
 	swag "github.com/go-openapi/swag"
 	validate "github.com/go-openapi/validate"
 
-	models "device-manager/pkg/models"
+	models "github.com/Speakerkfm/device-manager/pkg/models"
 )
 
 // DeviceListHandlerFunc turns a function with the right signature into a device list handler

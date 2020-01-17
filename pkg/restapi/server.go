@@ -25,7 +25,7 @@ import (
 	flags "github.com/jessevdk/go-flags"
 	"golang.org/x/net/netutil"
 
-	"device-manager/pkg/restapi/operations"
+	"github.com/Speakerkfm/device-manager/pkg/restapi/operations"
 )
 
 const (

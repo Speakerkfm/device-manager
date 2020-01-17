@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	models "device-manager/pkg/models"
+	models "github.com/Speakerkfm/device-manager/pkg/models"
 )
 
 // UserRegistrationOKCode is the HTTP code returned for type UserRegistrationOK

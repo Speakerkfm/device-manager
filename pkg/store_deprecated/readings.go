@@ -1,7 +1,7 @@
 package store_deprecated
 
 import (
-	"device-manager/pkg/models"
+	"github.com/Speakerkfm/device-manager/pkg/models"
 	"fmt"
 	"github.com/go-redis/cache"
 	"time"

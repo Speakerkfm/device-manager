@@ -19,10 +19,10 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"device-manager/pkg/restapi/operations/devices"
-	"device-manager/pkg/restapi/operations/users"
+	"github.com/Speakerkfm/device-manager/pkg/restapi/operations/devices"
+	"github.com/Speakerkfm/device-manager/pkg/restapi/operations/users"
 
-	models "device-manager/pkg/models"
+	models "github.com/Speakerkfm/device-manager/pkg/models"
 )
 
 // NewDeviceManagerAPI creates a new DeviceManager instance

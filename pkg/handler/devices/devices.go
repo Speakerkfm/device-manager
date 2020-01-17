@@ -1,11 +1,11 @@
 package devices
 
 import (
-	"device-manager/pkg/errors/httperrors"
-	"device-manager/pkg/errors/programerrors"
-	"device-manager/pkg/interfaces"
-	"device-manager/pkg/models"
-	"device-manager/pkg/restapi/operations/devices"
+	"github.com/Speakerkfm/device-manager/pkg/errors/httperrors"
+	"github.com/Speakerkfm/device-manager/pkg/errors/programerrors"
+	"github.com/Speakerkfm/device-manager/pkg/interfaces"
+	"github.com/Speakerkfm/device-manager/pkg/models"
+	"github.com/Speakerkfm/device-manager/pkg/restapi/operations/devices"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"

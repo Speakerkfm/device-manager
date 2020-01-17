@@ -1,9 +1,9 @@
 package service
 
 import (
-	"device-manager/pkg/errors/programerrors"
-	"device-manager/pkg/mocks"
-	"device-manager/pkg/models"
+	"github.com/Speakerkfm/device-manager/pkg/errors/programerrors"
+	"github.com/Speakerkfm/device-manager/pkg/mocks"
+	"github.com/Speakerkfm/device-manager/pkg/models"
 	"github.com/satori/go.uuid"
 	"github.com/stretchr/testify/assert"
 	"testing"

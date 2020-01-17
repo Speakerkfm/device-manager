@@ -1,7 +1,7 @@
 package service
 
 import (
-	"device-manager/pkg/interfaces"
+	"github.com/Speakerkfm/device-manager/pkg/interfaces"
 )
 
 const typeUser = "user"

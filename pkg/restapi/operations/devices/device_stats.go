@@ -10,7 +10,7 @@ import (
 
 	middleware "github.com/go-openapi/runtime/middleware"
 
-	models "device-manager/pkg/models"
+	models "github.com/Speakerkfm/device-manager/pkg/models"
 )
 
 // DeviceStatsHandlerFunc turns a function with the right signature into a device stats handler

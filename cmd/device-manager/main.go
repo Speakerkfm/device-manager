@@ -1,9 +1,9 @@
 package main
 
 import (
-	pkgConfig "device-manager/pkg/flags"
-	"device-manager/pkg/restapi"
-	"device-manager/pkg/restapi/operations"
+	pkgConfig "github.com/Speakerkfm/device-manager/pkg/flags"
+	"github.com/Speakerkfm/device-manager/pkg/restapi"
+	"github.com/Speakerkfm/device-manager/pkg/restapi/operations"
 	"github.com/go-openapi/loads"
 	"github.com/jessevdk/go-flags"
 	"github.com/rs/zerolog"

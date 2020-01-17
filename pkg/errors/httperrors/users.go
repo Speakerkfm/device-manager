@@ -1,6 +1,6 @@
 package httperrors
 
-import "device-manager/pkg/models"
+import "github.com/Speakerkfm/device-manager/pkg/models"
 
 var EmailTakenError = models.ErrorResult{Error: &models.ErrorResultError{
 	Code:        "001-001",
