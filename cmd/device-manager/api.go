@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/Speakerkfm/device-manager/pkg/errors/httperrors"
 	"github.com/Speakerkfm/device-manager/pkg/flags"
 	devices_handler "github.com/Speakerkfm/device-manager/pkg/handler/devices"
@@ -10,7 +11,6 @@ import (
 	"github.com/Speakerkfm/device-manager/pkg/restapi/operations/users"
 	"github.com/Speakerkfm/device-manager/pkg/service"
 	"github.com/Speakerkfm/device-manager/pkg/store"
-	"encoding/json"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog/log"
 	"net/http"

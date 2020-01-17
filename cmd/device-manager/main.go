@@ -12,7 +12,7 @@ import (
 	"os"
 )
 
-func main(){
+func main() {
 	conf := &pkgConfig.Config{}
 
 	parser := flags.NewParser(conf, flags.Default)
