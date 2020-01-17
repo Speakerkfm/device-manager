@@ -18,29 +18,6 @@
   revision = "de5bf2ad457846296e2031421a34e2568e304e35"
 
 [[projects]]
-  branch = "master"
-  digest = "1:e2ff40d29b1541780ae6156cc083ec4aaa691223d65bc62cbe4ad7a0ae44b9e9"
-  name = "github.com/Speakerkfm/device-manager"
-  packages = [
-    "pkg/errors/httperrors",
-    "pkg/errors/programerrors",
-    "pkg/flags",
-    "pkg/handler/devices",
-    "pkg/handler/users",
-    "pkg/interfaces",
-    "pkg/mocks",
-    "pkg/models",
-    "pkg/restapi",
-    "pkg/restapi/operations",
-    "pkg/restapi/operations/devices",
-    "pkg/restapi/operations/users",
-    "pkg/service",
-    "pkg/store",
-  ]
-  pruneopts = "UT"
-  revision = "ccdf46fcffe03d0879c892737f307a33b5c415ad"
-
-[[projects]]
   digest = "1:c68aba66f5db6052fd838d9a7d60d8859f8c11b8c1d9ac9758f69c7a51efc07a"
   name = "github.com/asaskevich/govalidator"
   packages = ["."]
@@ -402,20 +379,6 @@
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
-    "github.com/Speakerkfm/device-manager/pkg/errors/httperrors",
-    "github.com/Speakerkfm/device-manager/pkg/errors/programerrors",
-    "github.com/Speakerkfm/device-manager/pkg/flags",
-    "github.com/Speakerkfm/device-manager/pkg/handler/devices",
-    "github.com/Speakerkfm/device-manager/pkg/handler/users",
-    "github.com/Speakerkfm/device-manager/pkg/interfaces",
-    "github.com/Speakerkfm/device-manager/pkg/mocks",
-    "github.com/Speakerkfm/device-manager/pkg/models",
-    "github.com/Speakerkfm/device-manager/pkg/restapi",
-    "github.com/Speakerkfm/device-manager/pkg/restapi/operations",
-    "github.com/Speakerkfm/device-manager/pkg/restapi/operations/devices",
-    "github.com/Speakerkfm/device-manager/pkg/restapi/operations/users",
-    "github.com/Speakerkfm/device-manager/pkg/service",
-    "github.com/Speakerkfm/device-manager/pkg/store",
     "github.com/dgrijalva/jwt-go",
     "github.com/go-openapi/errors",
     "github.com/go-openapi/loads",

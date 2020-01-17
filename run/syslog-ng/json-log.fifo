@@ -179,3 +179,6 @@
 {"LEVEL":"debug","PROGRAM":"device-manager","time":"2020-01-16T20:15:11+05:00","MESSAGE":"Serving device manager at http://[::]:8000"}
 {"LEVEL":"debug","PROGRAM":"device-manager","time":"2020-01-16T20:15:15+05:00","MESSAGE":"Shutting down... "}
 {"LEVEL":"debug","PROGRAM":"device-manager","time":"2020-01-16T20:15:15+05:00","MESSAGE":"Stopped serving device manager at http://[::]:8000"}
+{"LEVEL":"debug","PROGRAM":"device-manager","time":"2020-01-17T10:59:44+05:00","MESSAGE":"Serving device manager at http://[::]:8000"}
+{"LEVEL":"debug","PROGRAM":"device-manager","time":"2020-01-17T11:00:06+05:00","MESSAGE":"Shutting down... "}
+{"LEVEL":"debug","PROGRAM":"device-manager","time":"2020-01-17T11:00:06+05:00","MESSAGE":"Stopped serving device manager at http://[::]:8000"}
