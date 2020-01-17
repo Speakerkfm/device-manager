@@ -26,9 +26,12 @@ docker:
 	GOOS=linux GOARCH=amd64 go build -v cmd/device-manager/*.go
 	docker build -t device-manager .
 
-testci:
-	go test  -failfast `go list ./... | grep -e /device-manager/pkg/service/ -e /device-manager/pkg/store/` -v -coverprofile .testCoverage.txt
+unittest:
+	go test -failfast `go list ./... | grep -e /pkg/service -e /pkg/store` -v -coverprofile .testCoverage.txt
 	go tool cover -func=.testCoverage.txt
 
 test:
-	export `cat .env` && make testci
+	export `cat .env` && make unittest
+
+coverage:
+	go tool cover -html=.testCoverage.txt
